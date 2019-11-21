@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTeamablesTable extends Migration
+class CreateDevelopersTeamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTeamablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('teamables', function (Blueprint $table) {
+        Schema::create('developers_teams', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('teamable_id');
-            $table->string('teamable_type');
+            $table->unsignedInteger('developer_id');
+            $table->unsignedInteger('team_id');
+            $table->foreign('developer_id')->references('id')->on('developers');
+            $table->foreign('team_id')->references('id')->on('teams');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateTeamablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teamables');
+        Schema::dropIfExists('developers_teams');
     }
 }

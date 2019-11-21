@@ -6,15 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    public function tasks() {
-        // has many - tasks
+    /**
+     * Get all of the tasks for the project.
+     */
+    public function tasks()
+    {
+        return $this->hasMany('App\Task');
     }
 
-    public function team() {
-        // belongs to team
+    /**
+     * Get the team for the project.
+     */
+    public function team()
+    {
+        return $this->belongsTo('App\Team');
     }
 
-    public function developers() {
-        // belongs to many developers
+    /**
+     * Get all of the developers for the project.
+     */
+    public function developers()
+    {
+        return $this->belongsToMany('App\Developer');
     }
- }
+}

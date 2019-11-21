@@ -6,11 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
-    public function developers() {
-        // has many developers
+    /**
+     * Get all of the developers that are assigned this team.
+     */
+    public function developers()
+    {
+        return $this->belongsToMany('App\Developer', 'developers_teams', 'team_id', 'developer_id');
     }
 
-    public function projects() {
-        // has many projects
+    /**
+     * Get all of the projects that are assigned this team.
+     */
+    public function projects()
+    {
+        return $this->hasMany('App\Projects');
     }
 }
