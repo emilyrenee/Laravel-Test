@@ -20,39 +20,39 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
     }
 
-    // /**
-    //  * A basic test example.
-    //  *
-    //  * @return void
-    //  */
-    // public function testDevelopersIndex()
-    // {
-    //     $response = $this->get('/developers');
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testDevelopersIndex()
+    {
+        $response = $this->get('/developers');
 
-    //     $response->assertStatus(200);
-    // }
+        $response->assertStatus(200);
+    }
 
-    // /**
-    //  * A basic test example.
-    //  *
-    //  * @return void
-    //  */
-    // public function testGetDevelopersCreate()
-    // {
-    //     $response = $this->get('/developers/create');
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testGetDevelopersCreate()
+    {
+        $response = $this->get('/developer/create');
 
-    //     $response->assertStatus(200);
-    // }
+        $response->assertStatus(200);
+    }
 
-    //  /**
-    //  * A basic test example.
-    //  *
-    //  * @return void
-    //  */
-    // public function testTeamsIndex()
-    // {
-    //     $response = $this->get('/teams');
+     /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testTeamsIndex()
+    {
+        $response = $this->get('/teams');
 
-    //     $response->assertStatus(200);
-    // }
+        $response->assertStatus(200);
+    }
 }
