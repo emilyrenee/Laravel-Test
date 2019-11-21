@@ -13,4 +13,6 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/developers', 'PagesController@developers');
+Route::get('/developer/create', 'PagesController@createDeveloper');
+Route::post('/developer/create', 'DeveloperController@create');
 Route::get('/teams', 'PagesController@teams');
