@@ -35,7 +35,7 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function testGetDevelopersCreate()
+    public function testGetDeveloperCreate()
     {
         $response = $this->get('/developer/create');
         $response->assertStatus(200);
@@ -46,7 +46,7 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function testPostDevelopersCreate()
+    public function testPostDeveloperCreate()
     {
         $this->withoutMiddleware();
         $response = $this->withHeaders([
@@ -60,12 +60,12 @@ class ExampleTest extends TestCase
         $response->assertStatus(302);
     }
 
-      /**
+    /**
      * A basic test example.
      *
      * @return void
      */
-    public function testPostDevelopersUpdate()
+    public function testPostDeveloperUpdate()
     {
         $this->withoutMiddleware();
         $response = $this->withHeaders([
@@ -74,6 +74,25 @@ class ExampleTest extends TestCase
             'POST',
             '/developer/update',
             ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 5]
+        );
+
+        $response->assertStatus(302);
+    }
+
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testPostDeveloperDelete()
+    {
+        $this->withoutMiddleware();
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/developer/delete',
+            ['id' => 5]
         );
 
         $response->assertStatus(302);

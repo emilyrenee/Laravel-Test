@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use App\Team;
 
 class Developer extends Model
@@ -24,20 +23,23 @@ class Developer extends Model
         return $this->belongsToMany('App\Team', 'developers_teams', 'developer_id', 'team_id');
     }
 
-    public function create(Request $request)
+    public function create(array $attributes = [])
     {
         $developer = new Developer();
-        $developer->name = $request->input('name');
-        $developer->email = $request->input('email');
+        $developer->save($attributes);
+    }
+
+    public function update(array $attributes = [], array $options = [])
+    {
+        $developer = Developer::find($attributes['id']);
+        $developer->name = $attributes['name'];
+        $developer->email = $attributes['email'];
         $developer->save();
     }
 
-    public function update(Request $request)
+    public function delete(array $attributes = [])
     {
-        $developer = Developer::find($request->input('id'));
-        $developer->name = $request->input('name');
-        $developer->email = $request->input('email');
-        $developer->save();
-        var_dump($developer);
+        $developer = Developer::find($attributes['id']);
+        $developer->delete();
     }
 }
