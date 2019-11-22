@@ -2,12 +2,11 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+// use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-
     /**
      * A basic test example.
      *
@@ -48,6 +47,7 @@ class ExampleTest extends TestCase
      */
     public function testPostDeveloperCreate()
     {
+
         $this->withoutMiddleware();
         $response = $this->withHeaders([
             'X-Header' => 'Value',
@@ -67,6 +67,7 @@ class ExampleTest extends TestCase
      */
     public function testPostDeveloperUpdate()
     {
+
         $this->withoutMiddleware();
         $response = $this->withHeaders([
             'X-Header' => 'Value',
@@ -74,7 +75,7 @@ class ExampleTest extends TestCase
             'POST',
             '/developer/update',
             // TODO: make seed file that ensure dev with this id exists
-            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 22]
+            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 24]
         );
 
         $response->assertStatus(302);
@@ -87,13 +88,15 @@ class ExampleTest extends TestCase
      */
     public function testPostDeveloperDelete()
     {
+
         $this->withoutMiddleware();
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
             '/developer/delete',
-            ['id' => 22]
+            // TODO: make seed file that ensure dev with this id exists
+            ['id' => 44]
         );
 
         $response->assertStatus(302);

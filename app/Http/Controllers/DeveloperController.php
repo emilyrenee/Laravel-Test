@@ -17,31 +17,33 @@ class DeveloperController extends Controller
     
     public function create(Request $request)
     {
-        $attributes = [
-            'name' => $request->input('name'),
-            'email' => $request->input('email')
-        ];
-        $this->developer->create($attributes);
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255'
+        ]);
+
+        $this->developer->create($validatedData);
         return redirect('/developers');
     }
 
     public function update(Request $request)
     {
-        $attributes = [
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'id' => $request->input('id')
-        ];
-        $this->developer->update($attributes);
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'id' => 'required'
+        ]);
+
+        $this->developer->update($validatedData);
         return redirect('/developers');
     }
 
     public function delete(Request $request)
     {
-        $attributes = [
-            'id' => $request->input('id')
-        ];
-        $this->developer->delete($attributes);
+        $validatedData = $request->validate([
+            'id' => 'required'
+        ]);
+        $this->developer->delete($validatedData);
         return redirect('/developers');
     }
 }
