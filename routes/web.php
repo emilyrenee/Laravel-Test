@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', 'PagesController@index');
 Route::get('/developers', 'PagesController@developers');
@@ -18,7 +19,3 @@ Route::post('/developer/create', 'DeveloperController@create');
 Route::post('/developer/update', 'DeveloperController@update');
 Route::post('/developer/delete', 'DeveloperController@delete');
 Route::get('/teams', 'PagesController@teams');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

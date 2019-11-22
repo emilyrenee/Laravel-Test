@@ -7,6 +7,12 @@ use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
+    
+    public function setUp()
+    {
+        parent::setUp();
+        $this->withoutMiddleware();
+    }
     /**
      * A basic test example.
      *
@@ -47,8 +53,6 @@ class ExampleTest extends TestCase
      */
     public function testPostDeveloperCreate()
     {
-
-        $this->withoutMiddleware();
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
@@ -67,8 +71,6 @@ class ExampleTest extends TestCase
      */
     public function testPostDeveloperUpdate()
     {
-
-        $this->withoutMiddleware();
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
@@ -88,15 +90,13 @@ class ExampleTest extends TestCase
      */
     public function testPostDeveloperDelete()
     {
-
-        $this->withoutMiddleware();
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
             '/developer/delete',
             // TODO: make seed file that ensure dev with this id exists
-            ['id' => 44]
+            ['id' => 45]
         );
 
         $response->assertStatus(302);
