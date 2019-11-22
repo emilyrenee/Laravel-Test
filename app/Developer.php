@@ -28,6 +28,7 @@ class Developer extends Model
         $developer->name = $attributes['name'];
         $developer->email = $attributes['email'];
         $developer->save();
+        return $developer;
     }
 
     public function update(array $attributes = [], array $options = [])
@@ -36,5 +37,6 @@ class Developer extends Model
         $developer->name = $attributes['name'];
         $developer->email = $attributes['email'];
         $developer->save();
+        return $developer;
     }
 }

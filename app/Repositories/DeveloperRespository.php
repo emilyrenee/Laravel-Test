@@ -16,17 +16,17 @@ class DeveloperRepository
 
     public function create(array $attributes = [])
     {
-        $this->developer->create($attributes);
+        return $this->developer->create($attributes);
     }
 
     public function update(array $attributes = [])
     {
-        $this->developer->update($attributes);
+        return $this->developer->update($attributes);
     }
 
     public function delete(array $attributes = [])
     {
         $developer = Developer::find($attributes['id']);
-        $developer->delete($attributes['id']);
+        return $developer->delete($attributes['id']);
     }
 }
