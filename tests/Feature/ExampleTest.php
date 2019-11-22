@@ -73,7 +73,8 @@ class ExampleTest extends TestCase
         ])->json(
             'POST',
             '/developer/update',
-            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 5]
+            // TODO: make seed file that ensure dev with this id exists
+            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 22]
         );
 
         $response->assertStatus(302);
@@ -92,7 +93,7 @@ class ExampleTest extends TestCase
         ])->json(
             'POST',
             '/developer/delete',
-            ['id' => 5]
+            ['id' => 22]
         );
 
         $response->assertStatus(302);

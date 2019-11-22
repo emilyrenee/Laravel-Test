@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Team;
+use Illuminate\Support\Facades\Log;
 
 class Developer extends Model
 {
@@ -26,7 +26,9 @@ class Developer extends Model
     public function create(array $attributes = [])
     {
         $developer = new Developer();
-        $developer->save($attributes);
+        $developer->name = $attributes['name'];
+        $developer->email = $attributes['email'];
+        $developer->save();
     }
 
     public function update(array $attributes = [], array $options = [])
@@ -35,11 +37,5 @@ class Developer extends Model
         $developer->name = $attributes['name'];
         $developer->email = $attributes['email'];
         $developer->save();
-    }
-
-    public function delete(array $attributes = [])
-    {
-        $developer = Developer::find($attributes['id']);
-        $developer->delete();
     }
 }

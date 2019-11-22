@@ -26,6 +26,7 @@ class DeveloperRepository
 
     public function delete(array $attributes = [])
     {
-        $this->developer->delete($attributes);
+        $developer = Developer::find($attributes['id']);
+        $developer->delete($attributes['id']);
     }
 }

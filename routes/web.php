@@ -16,4 +16,5 @@ Route::get('/developers', 'PagesController@developers');
 Route::get('/developer/create', 'PagesController@createDeveloper');
 Route::post('/developer/create', 'DeveloperController@create');
 Route::post('/developer/update', 'DeveloperController@update');
+Route::post('/developer/delete', 'DeveloperController@delete');
 Route::get('/teams', 'PagesController@teams');
