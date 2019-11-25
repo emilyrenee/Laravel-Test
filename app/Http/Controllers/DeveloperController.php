@@ -14,6 +14,7 @@ use App\Rules\FullName;
 class DeveloperController extends Controller
 {
     private $developer;
+    protected $fillable = ['name', 'email', 'timezone', 'personal_site'];
 
     public function __construct(DeveloperRepository $developerRepository)
     {
@@ -23,11 +24,10 @@ class DeveloperController extends Controller
     public function create(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => ['required', 'max:255', new FullName],
+            'name' => ['required', 'string', 'max:255', new FullName],
             'email' => 'required|email|max:255',
             'timezone' => 'required_if:is_local,true',
             'personal_site' => 'url'
-            // TODO: avatar -> customer rule and message
         ]);
         $developer = $this->developer->create($validatedData);
         $this->sendMail($developer);
@@ -42,8 +42,8 @@ class DeveloperController extends Controller
     public function update(Request $request)
     {
         $validatedData = $request->validate([
-            'id' => 'required',
-            'name' => 'required|max:255',
+            'id' => 'required|numeric',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'timezone' => 'required_if:is_local,true',
             'personal_site' => 'url'
