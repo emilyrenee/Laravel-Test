@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIsLocalAndTimezoneToDevelopersTable extends Migration
+class AddPersonalSiteToDevelopersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddIsLocalAndTimezoneToDevelopersTable extends Migration
     public function up()
     {
         Schema::table('developers', function (Blueprint $table) {
-            $table->boolean('is_local')->nullable()->default(false);
-            $table->string('timezone')->nullable();
+            $table->string('personal_site')->nullable();
         });
     }
 
@@ -27,8 +26,7 @@ class AddIsLocalAndTimezoneToDevelopersTable extends Migration
     public function down()
     {
         Schema::table('developers', function (Blueprint $table) {
-            $table->dropColumn('is_local');
-            $table->dropColumn('timezone');
+            $table->dropColumn('personal_site');
         });
     }
 }

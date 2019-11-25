@@ -77,7 +77,7 @@ class ExampleTest extends TestCase
             'POST',
             '/developer/update',
             // TODO: make seed file that ensure dev with this id exists
-            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 55]
+            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 60]
         );
 
         $response->assertStatus(302);
@@ -96,7 +96,7 @@ class ExampleTest extends TestCase
             'POST',
             '/developer/delete',
             // TODO: make seed file that ensure dev with this id exists
-            ['id' => 55]
+            ['id' => 60]
         );
 
         $response->assertStatus(302);

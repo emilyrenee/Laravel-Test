@@ -19,15 +19,21 @@ class DeveloperController extends Controller
     {
         $this->developer = $developerRepository;
     }
+
+    // (Illuminate\Http\Request $request, array $rules, array $messages = Array, array $customAttributes = Array)
+    public function validate(Request $request, $rules = [], $messages = [], $customAttributes = []) {
+        return $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'timezone' => 'required_if:is_local,true',
+            'personal_site' => 'url'
+        ]);
+    }
     
     public function create(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'timezone' => 'required_if:isLocal,true',
-        ]);
-
+        $validatedData = $this->validate($request);
+        Log::info($validatedData);
         $developer = $this->developer->create($validatedData);
         Log::info($developer);
         $this->sendMail($developer);
