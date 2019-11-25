@@ -24,7 +24,8 @@ class DeveloperController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255'
+            'email' => 'required|email|max:255',
+            'timezone' => 'required_if:isLocal,true',
         ]);
 
         $developer = $this->developer->create($validatedData);
@@ -43,7 +44,7 @@ class DeveloperController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
-            'id' => 'required'
+            'id' => 'required|numeric'
         ]);
 
         $this->developer->update($validatedData);
@@ -53,7 +54,7 @@ class DeveloperController extends Controller
     public function delete(Request $request)
     {
         $validatedData = $request->validate([
-            'id' => 'required'
+            'id' => 'required|numeric'
         ]);
         $this->developer->delete($validatedData);
         return redirect('/developers');
