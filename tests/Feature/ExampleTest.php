@@ -64,52 +64,50 @@ class ExampleTest extends TestCase
         $response->assertStatus(302);
     }
 
-    // /**
-    //  * A basic test example.
-    //  *
-    //  * @return void
-    //  */
-    // public function testPostDeveloperUpdate()
-    // {
-    //     $response = $this->withHeaders([
-    //         'X-Header' => 'Value',
-    //     ])->json(
-    //         'POST',
-    //         '/developer/update',
-    //         // TODO: make seed file that ensure dev with this id exists
-    //         ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 65]
-    //     );
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testPostDeveloperUpdate()
+    {
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/developer/update',
+            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 9001]
+        );
 
-    //     $response->assertStatus(302);
-    // }
+        $response->assertStatus(302);
+    }
 
-    // /**
-    //  * A basic test example.
-    //  *
-    //  * @return void
-    //  */
-    // public function testPostDeveloperDelete()
-    // {
-    //     $response = $this->withHeaders([
-    //         'X-Header' => 'Value',
-    //     ])->json(
-    //         'POST',
-    //         '/developer/delete',
-    //         // TODO: make seed file that ensure dev with this id exists
-    //         ['id' => 65]
-    //     );
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testPostDeveloperDelete()
+    {
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/developer/delete',
+            ['id' => 9001]
+        );
 
-    //     $response->assertStatus(302);
-    // }
+        $response->assertStatus(302);
+    }
 
-    // /**
-    //  * A basic test example.
-    //  *
-    //  * @return void
-    //  */
-    // public function testTeamsIndex()
-    // {
-    //     $response = $this->get('/teams');
-    //     $response->assertStatus(200);
-    // }
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testTeamsIndex()
+    {
+        $response = $this->get('/teams');
+        $response->assertStatus(200);
+    }
 }
