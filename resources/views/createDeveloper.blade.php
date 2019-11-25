@@ -21,7 +21,7 @@
         </div>
 
         <div style="margin: 2rem 0;">
-            <form method="post" action="/developer/create">
+            <form method="post" action="/developer/create" enctype="multipart/form-data">
                 @csrf
                 <div style="display: flex; flex-direction: column">
                     <div>
@@ -29,9 +29,14 @@
                         <input type="text" name="name">
                     </div>
                     <div>
-                        <label for="name">Email</label>
+                        <label for="email">Email</label>
                         <input type="text" name="email">
                     </div>
+                    <div>
+                        <label for="avatar">Avatar</label>
+                        <input type="file" name="avatar">
+                    </div>
+                    <br/><br/>
                     <input type="submit">
                 </div>
             </form>

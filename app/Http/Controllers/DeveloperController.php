@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use App\Rules\FullName;
+use Illuminate\Support\Facades\Log;
 
 // the repository is injected into the the controller
 class DeveloperController extends Controller
@@ -23,13 +24,18 @@ class DeveloperController extends Controller
 
     public function create(Request $request)
     {
+        Log::info($request);
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255', new FullName],
             'email' => 'required|email|max:255',
             'timezone' => 'required_if:is_local,true',
             'personal_site' => 'url'
+            // 'avatar' => 'file'
         ]);
-        $developer = $this->developer->create($validatedData);
+        Log::info('after validating');
+        Log::info($validatedData);
+
+        $developer = $this->developer->create($request, $validatedData);
         $this->sendMail($developer);
         return redirect('/developers');
     }

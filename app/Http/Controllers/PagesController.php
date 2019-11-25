@@ -25,7 +25,7 @@ class PagesController extends Controller
 
     public function developers()
     {
-        $developers = Developer::all();
+        $developers = Developer::paginate(5);
         return view('developers')->with('developers', $developers);
     }
 

@@ -14,9 +14,9 @@ class DeveloperRepository
         $this->developer = $developer;
     }
 
-    public function create(array $attributes = [])
+    public function create($request, array $attributes = [])
     {
-        return $this->developer->create($attributes);
+        return $this->developer->create($request, $attributes);
     }
 
     public function update(array $attributes = [])

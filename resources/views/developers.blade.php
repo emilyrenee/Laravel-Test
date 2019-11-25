@@ -1,6 +1,6 @@
 @include('partials.header')
 
-<div class="flex-center position-ref full-height">
+<div class="flex-center position-ref" style="padding: 4rem 0">
     @if (Route::has('login'))
     <div class="top-right links">
         @auth
@@ -21,8 +21,20 @@
         </div>
 
         <div style="margin: 2rem 0">
+            <a href="/developer/create">Add</a>
+        </div>
+
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="#">Projects</a>
+            <a href="/teams">Teams</a>
+            <a href="#">Tasks</a>
+        </div>
+
+        <div style="margin: 2rem 0">
             @foreach ($developers as $developer)
             <div style="margin: 1rem 0; display: flex; flex-direction: column; align-items: flex-start">
+                <img style="width:150px;height: 150px; margin: auto" src="/storage/avatars/{{ $developer->avatar }}">
                 <p style="margin: 0">{{ $developer->name }}</p>
                 <p style="margin: .15rem 0">{{ $developer->email }}</p>
                 @if(count($developer->teams) > 0)
@@ -34,17 +46,6 @@
                 <hr style="width: 100%;" />
             </div>
             @endforeach
-        </div>
-
-        <div style="margin: 2rem 0">
-            <a href="/developer/create">Add</a>
-        </div>
-
-        <div class="links">
-            <a href="/">Home</a>
-            <a href="#">Projects</a>
-            <a href="/teams">Teams</a>
-            <a href="#">Tasks</a>
         </div>
     </div>
 </div>
