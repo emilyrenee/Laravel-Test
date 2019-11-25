@@ -26,18 +26,13 @@ class FullName implements Rule
      */
     public function passes($attribute, $value)
     {
-        $hasSpace = false;
+        $pattern = '/\s/';
+        $hasSpace = preg_match($pattern, $value);
 
-        // ensure space exists between two strings
-        if ($value == trim($value) && strpos($value, ' ') !== false) {
-            $hasSpace = true;
-        }
-
+        // ensure all words are capitalized
         $exploded = explode(' ', $value);
         $testName = '';
-        // ensure all words are capitalized
         foreach ($exploded as $explode) {
-            Log::info($explode);
             $testName = trim($testName) . ' ' . ucfirst($explode);
         }
         $isCapitalized = $testName === $value;
