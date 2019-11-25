@@ -8,10 +8,10 @@ use App\Mail\DeveloperCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Log;
+use App\Rules\FullName;
 
 // the repository is injected into the the controller
-class DeveloperController extends Controller 
+class DeveloperController extends Controller
 {
     private $developer;
 
@@ -20,22 +20,16 @@ class DeveloperController extends Controller
         $this->developer = $developerRepository;
     }
 
-    // (Illuminate\Http\Request $request, array $rules, array $messages = Array, array $customAttributes = Array)
-    public function validate(Request $request, $rules = [], $messages = [], $customAttributes = []) {
-        return $request->validate([
-            'name' => 'required|max:255',
+    public function create(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required', 'max:255', new FullName],
             'email' => 'required|email|max:255',
             'timezone' => 'required_if:is_local,true',
             'personal_site' => 'url'
+            // TODO: avatar -> customer rule and message
         ]);
-    }
-    
-    public function create(Request $request)
-    {
-        $validatedData = $this->validate($request);
-        Log::info($validatedData);
         $developer = $this->developer->create($validatedData);
-        Log::info($developer);
         $this->sendMail($developer);
         return redirect('/developers');
     }
@@ -48,11 +42,12 @@ class DeveloperController extends Controller
     public function update(Request $request)
     {
         $validatedData = $request->validate([
+            'id' => 'required',
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
-            'id' => 'required|numeric'
+            'timezone' => 'required_if:is_local,true',
+            'personal_site' => 'url'
         ]);
-
         $this->developer->update($validatedData);
         return redirect('/developers');
     }
