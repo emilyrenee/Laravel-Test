@@ -24,13 +24,12 @@ class DeveloperController extends Controller
 
     public function create(Request $request)
     {
-        Log::info($request);
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255', new FullName],
             'email' => 'required|email|max:255',
             'timezone' => 'required_if:is_local,true',
-            'personal_site' => 'url'
-            // 'avatar' => 'file'
+            'personal_site' => 'url',
+            'avatar' => 'file'
         ]);
         Log::info('after validating');
         Log::info($validatedData);

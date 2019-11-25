@@ -4,8 +4,10 @@ namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Log;
 
-class ExampleTest extends TestCase
+// use to model factory for testable instances
+class DeveloperControllerTest extends TestCase
 {
     
     public function setUp()
@@ -13,63 +15,54 @@ class ExampleTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
     }
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testIndex()
-    {
-        $response = $this->get('/');
-        $response->assertStatus(200);
-    }
 
     /**
      * A basic test example.
-     *
+     * @test
      * @return void
      */
-    public function testDevelopersIndex()
-    {
-        $response = $this->get('/developers');
-        $response->assertStatus(200);
-    }
+    // public function createPasses()
+    // {
+    //     $response = $this->withHeaders([
+    //         'X-Header' => 'Value',
+    //     ])->json(
+    //         'POST',
+    //         '/developer/create',
+    //         ['name' => 'Tester Testing', 'email' => 'test@test.com']
+    //     );
+
+    //     $response->assertStatus(302);
+    // }
 
     /**
      * A basic test example.
-     *
+     * @test
      * @return void
      */
-    public function testGetDeveloperCreate()
-    {
-        $response = $this->get('/developer/create');
-        $response->assertStatus(200);
-    }
-
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testPostDeveloperCreate()
+    public function createFails()
     {
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
             '/developer/create',
-            ['name' => 'Tester Testing', 'email' => 'test@test.com']
+            ['name' => 'TesterTesting', 'email' => 'test@test.com']
         );
 
-        $response->assertStatus(302);
+        $json = json_decode($response->getContent(), true);
+        $customMessage = $json['errors']['name'][0];
+        $expectedCustomMessage = 'Name should include a captitalized First Name and Last Name with a space between.';
+
+        $this->assertEquals($customMessage, $expectedCustomMessage);
+        $response->assertStatus(422);
     }
 
     /**
      * A basic test example.
-     *
+     * @test
      * @return void
      */
-    public function testPostDeveloperUpdate()
+    public function update()
     {
         $response = $this->withHeaders([
             'X-Header' => 'Value',
@@ -84,10 +77,10 @@ class ExampleTest extends TestCase
 
     /**
      * A basic test example.
-     *
+     * @test
      * @return void
      */
-    public function testPostDeveloperDelete()
+    public function delete()
     {
         $response = $this->withHeaders([
             'X-Header' => 'Value',
@@ -98,16 +91,5 @@ class ExampleTest extends TestCase
         );
 
         $response->assertStatus(302);
-    }
-
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testTeamsIndex()
-    {
-        $response = $this->get('/teams');
-        $response->assertStatus(200);
     }
 }
