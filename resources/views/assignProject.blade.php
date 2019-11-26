@@ -17,9 +17,26 @@
 
     <div class="content">
         <div class="title m-b-md">
-            Teams
+            Assign Project
         </div>
 
+        <div style="margin: 2rem 0;">
+            <form onsubmit="event.preventDefault(); return handleAssignProject(event)">
+                @csrf
+                <div class="form-inner">
+                    <input type="submit" style="width: 200px">
+                    @if ($errors && $errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+            </form>
+        </div>
         <div class="links">
             <a href="/projects">Projects</a>
             <a href="/tasks">Tasks</a>
@@ -27,24 +44,6 @@
             <a href="/teams">Teams</a>
             <a href="/developers">Developers</a>
         </div>
-
-        <div style="margin: 2rem 0">
-            @foreach ($teams as $team)
-            <div
-                style="margin: 1rem 0; display: flex; flex-direction: column; align-items: flex-start"
-            >
-                <p style="margin: 0 0 .5rem 0">{{ $team->name }}</p>
-                @if(count($team->developers) > 0)
-                    <p style="margin: .5rem 0 0 0"><b>Developers</b></p>
-                    @foreach ($team->developers as $developer)
-                        <p style="margin: 0">{{ $developer->name }}</p>
-                    @endforeach
-                @endif
-                <hr style="width: 100%;"/>
-            </div>
-            @endforeach
-        </div>
-
     </div>
 </div>
 

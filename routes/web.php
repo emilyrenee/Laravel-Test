@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\Project;
+use Illuminate\Http\Request;
+
 Auth::routes();
 
 Route::get('/', 'PagesController@index');
@@ -21,3 +25,9 @@ Route::post('/developer/update', 'DeveloperController@update');
 Route::post('/developer/delete', 'DeveloperController@delete');
 Route::post('/developer/assignTeam', 'DeveloperController@assignTeam');
 Route::get('/teams', 'PagesController@teams');
+Route::get('/projects', 'PagesController@projects');
+Route::get('/project/assign', function (Request $request) {
+    $project = Project::find($request->query('id'));
+    return view('assignProject')->with('project', $project);
+});
+Route::get('/tasks', 'PagesController@tasks');

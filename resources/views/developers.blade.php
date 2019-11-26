@@ -25,8 +25,8 @@
         </div>
 
         <div class="links">
-            <a href="#">Projects</a>
-            <a href="#">Tasks</a>
+            <a href="/projects">Projects</a>
+            <a href="/tasks">Tasks</a>
             |
             <a href="/teams">Teams</a>
             <a href="/developers">Developers</a>
@@ -44,7 +44,7 @@
                     <p style="margin: 0 0 .15rem 0">{{ $team->name }}</p>
                     @endforeach
                 @endif
-                <a href="/developer/update?id={{$developer->id}}">Edit</a>
+                <a href="/developer/update?id={{$developer->id}}" style="align-self: flex-end">Edit</a>
                 <hr style="width: 100%;" />
             </div>
             @endforeach

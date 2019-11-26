@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Developer;
 use App\Team;
+use App\Project;
+use App\Task;
 use Illuminate\Support\Facades\Log;
 
 class PagesController extends Controller
@@ -47,5 +49,17 @@ class PagesController extends Controller
     {
         $teams = Team::all();
         return view('teams')->with('teams', $teams);
+    }
+
+    public function projects()
+    {
+        $projects = Project::all();
+        return view('projects')->with('projects', $projects);
+    }
+
+    public function tasks()
+    {
+        $tasks = Task::orderBy('updated_at', 'desc')->paginate(10);
+        return view('tasks')->with('tasks', $tasks);
     }
 }

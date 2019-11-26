@@ -17,7 +17,7 @@
 
     <div class="content">
         <div class="title m-b-md">
-            Teams
+            Projects
         </div>
 
         <div class="links">
@@ -29,17 +29,12 @@
         </div>
 
         <div style="margin: 2rem 0">
-            @foreach ($teams as $team)
+            @foreach ($projects as $project)
             <div
                 style="margin: 1rem 0; display: flex; flex-direction: column; align-items: flex-start"
             >
-                <p style="margin: 0 0 .5rem 0">{{ $team->name }}</p>
-                @if(count($team->developers) > 0)
-                    <p style="margin: .5rem 0 0 0"><b>Developers</b></p>
-                    @foreach ($team->developers as $developer)
-                        <p style="margin: 0">{{ $developer->name }}</p>
-                    @endforeach
-                @endif
+                <p style="margin: 0 0 .5rem 0">{{ $project->name }}</p>
+                <a href="/project/assign?id={{$project->id}}" style="align-self: flex-end">Assign</a>
                 <hr style="width: 100%;"/>
             </div>
             @endforeach

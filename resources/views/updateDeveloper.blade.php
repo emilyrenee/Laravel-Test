@@ -82,8 +82,8 @@
             </form>
         </div>
         <div class="links">
-            <a href="#">Projects</a>
-            <a href="#">Tasks</a>
+            <a href="/projects">Projects</a>
+            <a href="/tasks">Tasks</a>
             |
             <a href="/teams">Teams</a>
             <a href="/developers">Developers</a>
