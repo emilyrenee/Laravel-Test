@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use App\Rules\FullName;
-use Illuminate\Support\Facades\Log;
 
 class DeveloperController extends Controller
 {
@@ -31,7 +30,6 @@ class DeveloperController extends Controller
         ]);
 
         if ($request->has('personal_site')) {
-            Log::info('has personal site');
             $request->validate([
                 'personal_site' => 'url',
             ]);
@@ -39,13 +37,10 @@ class DeveloperController extends Controller
 
         $developer = $this->developer->create($request, $validatedData);
 
-        if ($request->get('team_id')) {
-            $this->developer->assignTeam(
-                [
-                    'id' => $developer->id,
-                    'team_id' => $request->get('team_id')
-                ]
-            );
+        if ($request->get('team_ids')) {
+            foreach ($request->get('team_ids') as $team_id) {
+                $this->developer->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
+            }
         }
 
         $this->sendMail($developer);
@@ -80,15 +75,12 @@ class DeveloperController extends Controller
 
     public function assignTeam(Request $request)
     {
-        Log::info($request);
-        // TODO: handle array of teams to assign all at once
         $request->validate([
             'id' => 'required|numeric',
         ]);
 
         $id = $request->get('id');
         $team_ids = $request->get('team_ids');
-        Log::info($team_ids);
         foreach ($team_ids as $team_id) {
             $this->developer->assignTeam(['id' => $id, 'team_id' => $team_id]);
         }

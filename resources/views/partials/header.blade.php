@@ -91,39 +91,49 @@
     </style>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-
-
         const handleCreateDeveloper = async (e) => {
-            console.log('e?', e);
-            const fields = ['name', 'email', 'avatar', 'is_local', 'timezone', 'team_option'];
+            const fields = ['name', 'email', 'avatar', 'is_local', 'timezone'];
 
             let data = {};
             fields.forEach(field => {
-                value = document.getElementById(field) && document.getElementById(field).value ? document.getElementById(field).value : null;
+                value = document.getElementById(field) &&
+                    document.getElementById(field).value ?
+                    document.getElementById(field).value :
+                    null;
                 data = {
                     ...data,
                     [field]: value
                 };
             });
 
-            Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
+            const selectFields = Array.from(document.getElementsByTagName('option'));
+            let team_ids = [];
+            selectFields.forEach(field => {
+                value = field &&
+                    field.selected &&
+                    field.value ?
+                    field.value :
+                    null;
+                team_ids = [...team_ids, value];
+            });
 
+
+            const filterNullValues = (object) => Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
+            filterNullValues(data);
 
             await axios.post('/developer/create', {
                     ...data,
                     "_token": "{{ csrf_token() }}",
+                    "team_ids": team_ids.filter(id => id !== null)
                 })
                 .then(function(response) {
-                    console.log('what now?');
                     console.log('response', response);
                 })
                 .catch(function(error) {
-                    console.log('there was sad error')
                     console.log(error);
                 });
 
-            
-            console.log('after calling');       
+            window.location = '/developers';
         }
     </script>
 

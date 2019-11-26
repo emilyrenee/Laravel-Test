@@ -21,7 +21,7 @@
         </div>
 
         <div style="margin: 2rem 0;">
-            <form onsubmit="event.preventDefault(); return handleCreateDeveloper()">
+            <form onsubmit="event.preventDefault(); return handleCreateDeveloper(event)">
                 @csrf
                 <div class="form-inner">
                     <div class="form-input">
@@ -49,15 +49,15 @@
                         <input type="text" name="personal_site" id="personal_site">
                     </div>
                     <div class="form-input">
-                        <select name="team_id">
+                        <select name="team_ids" multiple>
                             @foreach ($teamOptions as $option)
-                            <option value="{{ $option->id }}" id="team_option">{{ $option->name }}</option>
+                            <option value="{{ $option->id }}" id="team_ids_{{$loop->iteration}}" onselect="handleSelect(event)">{{ $option->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <br />
                     <input type="submit">
-                    @if ($errors && $errors->any())
+                    @if (isset($errors) && $errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
