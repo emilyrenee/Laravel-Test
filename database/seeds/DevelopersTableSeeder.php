@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-// TODO: add avatar
 class DevelopersTableSeeder extends Seeder
 {
     /**
@@ -14,7 +13,7 @@ class DevelopersTableSeeder extends Seeder
     public function run()
     {
         DB::table('developers')->insert([
-            'name' => 'Tester1 Tester',
+            'name' => 'Rando Rando1',
             'email' => str_random(10).'@gmail.com',
             'is_local' => false,
             'personal_site' => 'www.testerly1.com',
@@ -24,7 +23,7 @@ class DevelopersTableSeeder extends Seeder
         ]);
 
         DB::table('developers')->insert([
-            'name' => 'Tester2 Tester',
+            'name' => 'Rando Rando2',
             'email' => str_random(10).'@gmail.com',
             'is_local' => false,
             'personal_site' => 'www.testerly2.com',
@@ -34,7 +33,7 @@ class DevelopersTableSeeder extends Seeder
         ]);
 
         DB::table('developers')->insert([
-            'name' => 'Tester3 Tester',
+            'name' => 'Rando Rando3',
             'email' => str_random(10).'@gmail.com',
             'is_local' => false,
             'personal_site' => 'www.testerly3.com',
@@ -43,32 +42,22 @@ class DevelopersTableSeeder extends Seeder
             'updated_at' => Carbon::now()
         ]);
 
-        DB::table('teams')->insert([
-            'name' => 'Javascript',
+        DB::table('developers')->insert([
+            'name' => 'Rando Rando4',
+            'email' => str_random(10).'@gmail.com',
+            'is_local' => false,
+            'personal_site' => 'www.testerly4.com',
+            'avatar' => 'noimage.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
 
-        DB::table('teams')->insert([
-            'name' => 'PHP',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        DB::table('teams')->insert([
-            'name' => 'Data Science',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        DB::table('teams')->insert([
-            'name' => 'BI',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        DB::table('teams')->insert([
-            'name' => 'Data Mining',
+        DB::table('developers')->insert([
+            'name' => 'Rando Rando5',
+            'email' => str_random(10).'@gmail.com',
+            'is_local' => false,
+            'personal_site' => 'www.testerly5.com',
+            'avatar' => 'noimage.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);

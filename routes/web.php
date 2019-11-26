@@ -16,6 +16,7 @@ Route::get('/', 'PagesController@index');
 Route::get('/developers', 'PagesController@developers');
 Route::get('/developer/create', 'PagesController@createDeveloper');
 Route::post('/developer/create', 'DeveloperController@create');
+Route::get('/developer/update', 'PagesController@updateDeveloper');
 Route::post('/developer/update', 'DeveloperController@update');
 Route::post('/developer/delete', 'DeveloperController@delete');
 Route::post('/developer/assignTeam', 'DeveloperController@assignTeam');

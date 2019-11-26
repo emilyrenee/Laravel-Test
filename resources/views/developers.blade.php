@@ -44,6 +44,7 @@
                     <p style="margin: 0 0 .15rem 0">{{ $team->name }}</p>
                     @endforeach
                 @endif
+                <a href="/developer/update?id={{$developer->id}}">Edit</a>
                 <hr style="width: 100%;" />
             </div>
             @endforeach

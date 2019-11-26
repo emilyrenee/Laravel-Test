@@ -128,12 +128,60 @@
                 })
                 .then(function(response) {
                     console.log('response', response);
+                    window.location = '/developers';
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
 
-            window.location = '/developers';
+        }
+    </script>
+
+    <script>
+        const handleUpdateDeveloper = async (e) => {
+            const fields = ['id', 'name', 'email', 'avatar', 'is_local', 'timezone'];
+
+            let data = {};
+            fields.forEach(field => {
+                value = document.getElementById(field) &&
+                    document.getElementById(field).value ?
+                    document.getElementById(field).value :
+                    null;
+                data = {
+                    ...data,
+                    [field]: value
+                };
+            });
+
+            const selectFields = Array.from(document.getElementsByTagName('option'));
+            let team_ids = [];
+            selectFields.forEach(field => {
+                value = field &&
+                    field.selected &&
+                    field.value ?
+                    field.value :
+                    null;
+                team_ids = [...team_ids, value];
+            });
+
+
+            const filterNullValues = (object) => Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
+            filterNullValues(data);
+
+            await axios.post('/developer/update', {
+                    ...data,
+                    "_token": "{{ csrf_token() }}",
+                    "team_ids": team_ids.filter(id => id !== null)
+                })
+                .then(function(response) {
+                    console.log('response', response);
+                    window.location = '/developers';
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+
+
         }
     </script>
 

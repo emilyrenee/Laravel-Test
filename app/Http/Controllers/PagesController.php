@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Developer;
 use App\Team;
+use Illuminate\Support\Facades\Log;
 
 class PagesController extends Controller
 {
@@ -33,6 +34,13 @@ class PagesController extends Controller
     {
         $teamOptions = Team::all();
         return view('createDeveloper')->with('teamOptions', $teamOptions);
+    }
+
+    public function updateDeveloper(Request $request)
+    {
+        $developer = Developer::find($request->query('id'));
+        $teamOptions = Team::all();
+        return view('updateDeveloper')->with('teamOptions', $teamOptions)->with('developer', $developer);
     }
 
     public function teams()
