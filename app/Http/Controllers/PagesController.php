@@ -31,7 +31,8 @@ class PagesController extends Controller
 
     public function createDeveloper()
     {
-        return view('createDeveloper');
+        $teamOptions = Team::all();
+        return view('createDeveloper')->with('teamOptions', $teamOptions);
     }
 
     public function teams()

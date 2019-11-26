@@ -7,7 +7,8 @@ use Illuminate\Contracts\Validation\Rule;
 class FullName implements Rule
 {
     /**
-     * Determine if the validation rule passes.
+     * Determine if value has two capitalized words
+     * with a space between.
      *
      * @param  string  $attribute
      * @param  mixed  $value
@@ -17,8 +18,7 @@ class FullName implements Rule
     {
         $pattern = '/\s/';
         $hasSpace = preg_match($pattern, $value);
-
-        // ensure all words are capitalized
+        
         $exploded = explode(' ', $value);
         $testName = '';
         foreach ($exploded as $explode) {

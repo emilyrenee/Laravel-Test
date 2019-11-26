@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Log;
+use App\Developer;
 
-// use to model factory for testable instances
 class DeveloperControllerTest extends TestCase
 {
-    
+    use DatabaseTransactions;
+
     public function setUp()
     {
         parent::setUp();
@@ -21,18 +21,19 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    // public function createPasses()
-    // {
-    //     $response = $this->withHeaders([
-    //         'X-Header' => 'Value',
-    //     ])->json(
-    //         'POST',
-    //         '/developer/create',
-    //         ['name' => 'Tester Testing', 'email' => 'test@test.com']
-    //     );
+    public function createPasses()
+    {
+        $developer = factory(Developer::class)->create();
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/developer/create',
+            ['name' => $developer->name, 'email' => $developer->email]
+        );
 
-    //     $response->assertStatus(302);
-    // }
+        $response->assertStatus(302);
+    }
 
     /**
      * A basic test example.
@@ -41,12 +42,15 @@ class DeveloperControllerTest extends TestCase
      */
     public function createFails()
     {
+        $developer = factory(Developer::class)->create(['name' => 'DoesntPass']);
+
+
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
             '/developer/create',
-            ['name' => 'TesterTesting', 'email' => 'test@test.com']
+            ['name' => $developer->name, 'email' => $developer->email]
         );
 
         $json = json_decode($response->getContent(), true);
@@ -62,14 +66,16 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function update()
+    public function updatePasses()
     {
+        $developer = factory(Developer::class)->create();
+
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
             '/developer/update',
-            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => 9001]
+            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => $developer->id]
         );
 
         $response->assertStatus(302);
@@ -82,12 +88,14 @@ class DeveloperControllerTest extends TestCase
      */
     public function delete()
     {
+        $developer = factory(Developer::class)->create();
+
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
             '/developer/delete',
-            ['id' => 9001]
+            ['id' => $developer->id]
         );
 
         $response->assertStatus(302);

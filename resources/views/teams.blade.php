@@ -20,6 +20,14 @@
             Teams
         </div>
 
+        <div class="links">
+            <a href="#">Projects</a>
+            <a href="#">Tasks</a>
+            |
+            <a href="/teams">Teams</a>
+            <a href="/developers">Developers</a>
+        </div>
+
         <div style="margin: 2rem 0">
             @foreach ($teams as $team)
             <div
@@ -37,12 +45,6 @@
             @endforeach
         </div>
 
-        <div class="links">
-            <a href="/">Home</a>
-            <a href="#">Projects</a>
-            <a href="/developers">Developers</a>
-            <a href="#">Tasks</a>
-        </div>
     </div>
 </div>
 

@@ -22,9 +22,10 @@
 
         <div class="links">
             <a href="#">Projects</a>
+            <a href="#">Tasks</a>
+            |
             <a href="/teams">Teams</a>
             <a href="/developers">Developers</a>
-            <a href="#">Tasks</a>
         </div>
     </div>
 </div>

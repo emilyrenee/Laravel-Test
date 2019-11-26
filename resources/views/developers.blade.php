@@ -25,10 +25,11 @@
         </div>
 
         <div class="links">
-            <a href="/">Home</a>
             <a href="#">Projects</a>
-            <a href="/teams">Teams</a>
             <a href="#">Tasks</a>
+            |
+            <a href="/teams">Teams</a>
+            <a href="/developers">Developers</a>
         </div>
 
         <div style="margin: 2rem 0">
