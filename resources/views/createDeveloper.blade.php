@@ -21,23 +21,51 @@
         </div>
 
         <div style="margin: 2rem 0;">
-            <form method="post" action="/developer/create" enctype="multipart/form-data">
+            <form onsubmit="event.preventDefault(); return handleCreateDeveloper()">
                 @csrf
-                <div style="display: flex; flex-direction: column">
-                    <div>
+                <div class="form-inner">
+                    <div class="form-input">
                         <label for="name">Name</label>
-                        <input type="text" name="name">
+                        <input type="text" name="name" id="name">
                     </div>
-                    <div>
+                    <div class="form-input">
                         <label for="email">Email</label>
-                        <input type="text" name="email">
+                        <input type="text" name="email" id="email">
                     </div>
-                    <div>
+                    <div class="form-input">
                         <label for="avatar">Avatar</label>
-                        <input type="file" name="avatar">
+                        <input type="file" name="avatar" id="avatar">
                     </div>
-                    <br/><br/>
+                    <div class="form-input-row">
+                        <label for="is_local">Developer is local resident?</label>&nbsp;
+                        <input type="checkbox" name="is_local" value="true" id="is_local">
+                    </div>
+                    <div class="form-input">
+                        <label for="timezone">Timezone</label>
+                        <input type="text" name="timezone" id="timzone">
+                    </div>
+                    <div class="form-input">
+                        <label for="timezone">Personal Site</label>
+                        <input type="text" name="personal_site" id="personal_site">
+                    </div>
+                    <div class="form-input">
+                        <select name="team_id">
+                            @foreach ($teamOptions as $option)
+                            <option value="{{ $option->id }}" id="team_option">{{ $option->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <br />
                     <input type="submit">
+                    @if ($errors && $errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 </div>
             </form>
         </div>

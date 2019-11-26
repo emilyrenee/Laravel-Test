@@ -47,7 +47,6 @@ class Developer extends Model
         $developer->email = $attributes['email'];
         $developer->avatar = $fileNameToStore;
         $developer->save();
-        Log::info($developer);
         return $developer;
     }
 

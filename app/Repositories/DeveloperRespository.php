@@ -29,4 +29,11 @@ class DeveloperRepository
         $developer = Developer::find($attributes['id']);
         return $developer->delete($attributes['id']);
     }
+
+    public function assignTeam(array $attributes = [])
+    {
+        $developer = Developer::find($attributes['id']);
+        $developer->teams()->attach($attributes['team_id']);
+        return $developer;
+    }
 }

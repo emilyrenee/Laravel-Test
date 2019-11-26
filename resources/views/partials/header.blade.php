@@ -9,7 +9,6 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
     <!-- Styles -->
     <style>
         html,
@@ -63,7 +62,71 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+
+        .form-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center
+        }
+
+        .form-input,
+        .form-input-row {
+            display: flex;
+            width: 300px;
+            margin: .5rem 0;
+        }
+
+        .form-input {
+            flex-direction: column;
+        }
+
+        .form-input-row {
+            flex-direction: row;
+        }
+
+        .form-input label,
+        .form-input-row label {
+            align-self: flex-start;
+        }
     </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+
+
+        const handleCreateDeveloper = async (e) => {
+            console.log('e?', e);
+            const fields = ['name', 'email', 'avatar', 'is_local', 'timezone', 'team_option'];
+
+            let data = {};
+            fields.forEach(field => {
+                value = document.getElementById(field) && document.getElementById(field).value ? document.getElementById(field).value : null;
+                data = {
+                    ...data,
+                    [field]: value
+                };
+            });
+
+            Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
+
+
+            await axios.post('/developer/create', {
+                    ...data,
+                    "_token": "{{ csrf_token() }}",
+                })
+                .then(function(response) {
+                    console.log('what now?');
+                    console.log('response', response);
+                })
+                .catch(function(error) {
+                    console.log('there was sad error')
+                    console.log(error);
+                });
+
+            
+            console.log('after calling');       
+        }
+    </script>
+
 </head>
 
 <body>

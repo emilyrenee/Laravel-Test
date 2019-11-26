@@ -3,6 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 
 class FullName implements Rule
 {
@@ -16,6 +17,8 @@ class FullName implements Rule
      */
     public function passes($attribute, $value)
     {
+        Log::info('validating for fullname');
+        Log::info($value);
         $pattern = '/\s/';
         $hasSpace = preg_match($pattern, $value);
         

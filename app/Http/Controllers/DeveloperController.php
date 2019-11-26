@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use App\Rules\FullName;
+use Illuminate\Support\Facades\Log;
 
 class DeveloperController extends Controller
 {
@@ -26,10 +27,27 @@ class DeveloperController extends Controller
             'name' => ['required', 'string', 'max:255', new FullName],
             'email' => 'required|email|max:255',
             'avatar' => 'file',
-            'personal_site' => 'url',
-            'timezone' => 'required_if:is_local,true'
+            'timezone' => 'required_if:is_local,false'
         ]);
+
+        if ($request->has('personal_site')) {
+            Log::info('has personal site');
+            $request->validate([
+                'personal_site' => 'url',
+            ]);
+        }
+
         $developer = $this->developer->create($request, $validatedData);
+
+        if ($request->get('team_id')) {
+            $this->developer->assignTeam(
+                [
+                    'id' => $developer->id,
+                    'team_id' => $request->get('team_id')
+                ]
+            );
+        }
+
         $this->sendMail($developer);
         return redirect('/developers');
     }
@@ -57,6 +75,25 @@ class DeveloperController extends Controller
             'id' => 'required|numeric'
         ]);
         $this->developer->delete($validatedData);
+        return redirect('/developers');
+    }
+
+    public function assignTeam(Request $request)
+    {
+        Log::info($request);
+        // TODO: handle array of teams to assign all at once
+        $request->validate([
+            'id' => 'required|numeric',
+        ]);
+
+        $id = $request->get('id');
+        $team_ids = $request->get('team_ids');
+        Log::info($team_ids);
+        foreach ($team_ids as $team_id) {
+            $this->developer->assignTeam(['id' => $id, 'team_id' => $team_id]);
+        }
+
+
         return redirect('/developers');
     }
 }

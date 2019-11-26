@@ -18,6 +18,7 @@ class DevelopersTableSeeder extends Seeder
             'email' => str_random(10).'@gmail.com',
             'is_local' => false,
             'personal_site' => 'www.testerly1.com',
+            'avatar' => 'noimage.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -27,6 +28,7 @@ class DevelopersTableSeeder extends Seeder
             'email' => str_random(10).'@gmail.com',
             'is_local' => false,
             'personal_site' => 'www.testerly2.com',
+            'avatar' => 'noimage.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -36,6 +38,7 @@ class DevelopersTableSeeder extends Seeder
             'email' => str_random(10).'@gmail.com',
             'is_local' => false,
             'personal_site' => 'www.testerly3.com',
+            'avatar' => 'noimage.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);

@@ -25,7 +25,7 @@ class PagesController extends Controller
 
     public function developers()
     {
-        $developers = Developer::paginate(5);
+        $developers = Developer::orderBy('updated_at', 'desc')->paginate(5);
         return view('developers')->with('developers', $developers);
     }
 

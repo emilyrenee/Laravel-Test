@@ -86,7 +86,7 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function delete()
+    public function deletePasses()
     {
         $developer = factory(Developer::class)->create();
 
@@ -96,6 +96,46 @@ class DeveloperControllerTest extends TestCase
             'POST',
             '/developer/delete',
             ['id' => $developer->id]
+        );
+
+        $response->assertStatus(302);
+    }
+
+    /**
+     * A basic test example.
+     * @test
+     * @return void
+     */
+    public function assignTeamPasses()
+    {
+        $developer = factory(Developer::class)->create();
+
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/developer/assignTeam',
+            ['id' => $developer->id, 'team_ids' => [4]]
+        );
+
+        $response->assertStatus(302);
+    }
+
+      /**
+     * A basic test example.
+     * @test
+     * @return void
+     */
+    public function assignTeamPassesMuliAssign()
+    {
+        $developer = factory(Developer::class)->create();
+
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/developer/assignTeam',
+            ['id' => $developer->id, 'team_ids' => [4, 5, 6]]
         );
 
         $response->assertStatus(302);
