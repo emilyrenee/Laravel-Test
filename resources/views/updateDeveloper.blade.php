@@ -17,7 +17,7 @@
 
     <div class="content">
         <div class="title m-b-md">
-            New Developer
+            Edit Developer
         </div>
 
         <div style="margin: 2rem 0;">
