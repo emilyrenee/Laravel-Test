@@ -5,9 +5,9 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Project;
-use App\Team;
+use App\Task;
 
-class ProjectAssignTeamTest extends TestCase
+class ProjectAssignTasksTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -18,21 +18,21 @@ class ProjectAssignTeamTest extends TestCase
     }
 
     /**
-     * Project assign team route returns 302 status.
+     * Team assign project route returns 302 status.
      * @test
      * @return void
      */
-    public function assignTeamPasses()
+    public function assignTasksPasses()
     {
         $project = factory(Project::class)->create();
-        $team = factory(Team::class)->create();
+        $task = factory(Task::class)->create();
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/project/assignTeam',
-            ['id' => $project->id, 'team_id' => $team->id]
+            '/project/assignTask',
+            ['id' => $project->id, 'task_id' => $task->id]
         );
 
         $response->assertStatus(302);

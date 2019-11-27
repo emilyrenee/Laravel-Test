@@ -18,7 +18,7 @@ class TeamAssignProjectsTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Team assign project route returns 302 status.
      * @test
      * @return void
      */

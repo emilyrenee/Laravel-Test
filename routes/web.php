@@ -64,4 +64,14 @@ Route::post('/task/assignProject', function (Request $request) {
     $task->save();
     return redirect('/tasks');
 });
+Route::post('/project/assignTask', function (Request $request) {
+    $request->validate([
+        'id' => 'required|numeric',
+        'task_id' => 'required|numeric',
+    ]);
+    $task = Task::find($request->get('task_id'));
+    $task->project_id = $request->get('id');
+    $task->save();
+    return redirect('/projects');
+});
 

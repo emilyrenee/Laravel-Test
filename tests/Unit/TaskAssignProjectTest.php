@@ -18,7 +18,7 @@ class TaskAssignProjectTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Task assign project route returns 302 status.
      * @test
      * @return void
      */
