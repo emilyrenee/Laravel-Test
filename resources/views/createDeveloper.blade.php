@@ -1,6 +1,6 @@
 @include('partials.header')
 
-<div class="flex-center position-ref full-height">
+<div class="flex-center position-ref full-height" style="padding: 4rem 0">
     @if (Route::has('login'))
     <div class="top-right links">
         @auth

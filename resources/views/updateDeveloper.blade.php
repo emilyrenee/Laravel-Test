@@ -1,6 +1,6 @@
 @include('partials.header')
 
-<div class="flex-center position-ref full-height">
+<div class="flex-center position-ref" style="padding: 4rem 0">
     @if (Route::has('login'))
     <div class="top-right links">
         @auth
@@ -18,6 +18,14 @@
     <div class="content">
         <div class="title m-b-md">
             Edit Developer
+        </div>
+
+        <div class="links">
+            <a href="/projects">Projects</a>
+            <a href="/tasks">Tasks</a>
+            |
+            <a href="/teams">Teams</a>
+            <a href="/developers">Developers</a>
         </div>
 
         <div style="margin: 2rem 0;">
@@ -80,13 +88,6 @@
                     @endif
                 </div>
             </form>
-        </div>
-        <div class="links">
-            <a href="/projects">Projects</a>
-            <a href="/tasks">Tasks</a>
-            |
-            <a href="/teams">Teams</a>
-            <a href="/developers">Developers</a>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 @include('partials.header')
 
-<div class="flex-center position-ref full-height">
+<div class="flex-center position-ref" style="padding: 4rem 0">
     @if (Route::has('login'))
     <div class="top-right links">
         @auth
@@ -31,10 +31,16 @@
         <div style="margin: 2rem 0">
             @foreach ($projects as $project)
             <div
-                style="margin: 1rem 0; display: flex; flex-direction: column; align-items: flex-start"
+                style="margin: 4rem 0; display: flex; flex-direction: column; align-items: flex-start"
             >
-                <p style="margin: 0 0 .5rem 0">{{ $project->name }}</p>
-                <a href="/project/assignTeam?id={{$project->id}}" style="align-self: flex-end">Assign</a>
+                <h2 style="margin: 0 0 .25rem 0">{{ $project->name }}</h2>
+                @if($project->team)
+                    <p style="margin: .25rem 0 0 0"><b>Team</b></p>
+                    <p style="margin: 0 0 .15rem 0">{{ $project->team->name }}</p>
+                @endif
+                @if(!$project->team)
+                    <a href="/project/assignTeam?id={{$project->id}}" style="align-self: flex-end">Assign</a>
+                @endif
                 <hr style="width: 100%;"/>
             </div>
             @endforeach

@@ -20,6 +20,11 @@
             height: 100vh;
             margin: 0;
         }
+        
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: .25rem;
+        }
 
         .full-height {
             height: 100vh;
