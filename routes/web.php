@@ -24,10 +24,10 @@ Route::get('/developers', 'PagesController@developers');
 Route::get('/developer/create', 'PagesController@developerCreate');
 Route::get('/developer/update', 'PagesController@developerUpdate');
 Route::get('/teams', 'PagesController@teams');
+Route::get('/team/assignProject', 'PagesController@teamAssignProject');
 Route::get('/projects', 'PagesController@projects');
 Route::get('/project/assignTeam', 'PagesController@projectAssignTeam');
 Route::get('/tasks', 'PagesController@tasks');
-
 Route::post('/developer/create', 'DeveloperController@create');
 Route::post('/developer/update', 'DeveloperController@update');
 Route::post('/developer/delete', 'DeveloperController@delete');
@@ -43,5 +43,16 @@ Route::post('/project/assignTeam', function (Request $request) {
     $project->team_id = $request->get('team_id');
     $project->save();
     return redirect('/projects');
+});
+
+Route::post('/team/assignProject', function (Request $request) {
+    $request->validate([
+        'id' => 'required|numeric',
+        'project_id' => 'required|numeric',
+    ]);
+    $project = Project::find($request->get('project_id'));
+    $project->team_id = $request->get('id');
+    $project->save();
+    return redirect('/teams');
 });
 

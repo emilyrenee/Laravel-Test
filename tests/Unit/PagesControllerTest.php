@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Developer;
 use App\Project;
-use Illuminate\Support\Facades\Log;
 
 class PagesControllerTest extends TestCase
 {
+    use DatabaseTransactions;
 
     public function setUp()
     {

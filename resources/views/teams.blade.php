@@ -46,6 +46,7 @@
                         <p style="margin: 0">{{ $project->name }}</p>
                     @endforeach
                 @endif
+                <a href="/team/assignProject?id={{$team->id}}" style="align-self: flex-end">Assign Project</a>
                 <hr style="width: 100%;"/>
             </div>
             @endforeach

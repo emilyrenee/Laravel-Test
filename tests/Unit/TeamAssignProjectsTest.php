@@ -7,7 +7,7 @@ use Tests\TestCase;
 use App\Project;
 use App\Team;
 
-class AssignProjectsTest extends TestCase
+class TeamAssignProjectsTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -31,8 +31,8 @@ class AssignProjectsTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/project/assignTeam',
-            ['id' => $project->id, 'team_id' => $team->id]
+            '/team/assignProject',
+            ['id' => $team->id, 'project_id' => $project->id]
         );
 
         $response->assertStatus(302);

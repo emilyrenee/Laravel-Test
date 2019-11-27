@@ -17,7 +17,7 @@
 
     <div class="content">
         <div class="title m-b-md">
-            Assign Project
+            Assign Project To Team
         </div>
 
         <div class="links">
@@ -29,18 +29,25 @@
         </div>
 
         <div style="margin: 2rem 0;">
-            <h2 style="margin: 0 0 .25rem 0">{{ $project->name }}</h2>
-            <form method="post" action="/project/assignTeam">
+            <h2 style="margin: 0 0 .25rem 0">{{ $team->name }}</h2>
+            <form method="post" action="/team/assignProject">
                 @csrf
                 <div class="form-inner">
-                    <input type="hidden" name="id" id="id" value="{{$project->id}}">
+                    <input type="hidden" name="id" id="id" value="{{$team->id}}">
                     <div class="form-input">
-                        <label for="team_id">Select one team</label>
-                        <select name="team_id" multiple>
-                            @foreach ($teams as $team)
-                            <option value="{{ $team->id }}" id="team_ids_{{$loop->iteration}}">
-                                {{ $team->name }}
-                            </option>
+                        <label for="project_id">Select one or more project(s)</label>
+                        <select name="project_id" multiple>
+                            @foreach ($projects as $project)
+                                @if(!$project->team_id)
+                                    <option value="{{ $project->id }}" id="project_id_{{$loop->iteration}}">
+                                        {{ $project->name }}
+                                    </option>
+                                @endif
+                                @if($project->team_id === $team->id )
+                                    <option value="{{ $project->id }}" id="project_id_{{$loop->iteration}}" selected>
+                                        {{ $project->name }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

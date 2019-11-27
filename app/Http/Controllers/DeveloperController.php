@@ -61,7 +61,15 @@ class DeveloperController extends Controller
             'email' => 'required|email|max:255',
             'personal_site' => 'url'
         ]);
-        $this->developer->update($validatedData);
+        
+        $developer = $this->developer->update($validatedData);
+
+        if ($request->get('team_ids')) {
+            foreach ($request->get('team_ids') as $team_id) {
+                $this->developer->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
+            }
+        }
+
         return redirect('/developers');
     }
 
