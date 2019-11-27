@@ -79,6 +79,7 @@ class DeveloperController extends Controller
     {
         $request->validate([
             'id' => 'required|numeric',
+            // 'team_id' => 'required|numeric'
         ]);
 
         $id = $request->get('id');

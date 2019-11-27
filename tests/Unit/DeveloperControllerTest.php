@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Developer;
+use App\Team;
 
 class DeveloperControllerTest extends TestCase
 {
@@ -109,19 +110,23 @@ class DeveloperControllerTest extends TestCase
     public function assignTeamPasses()
     {
         $developer = factory(Developer::class)->create();
+        $team = factory(Team::class)->create();
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
             '/developer/assignTeam',
-            ['id' => $developer->id, 'team_ids' => [4]]
+            [
+                'id' => $developer->id,
+                'team_ids' => [$team->id]
+            ]
         );
 
         $response->assertStatus(302);
     }
 
-      /**
+    /**
      * A basic test example.
      * @test
      * @return void
@@ -129,13 +134,19 @@ class DeveloperControllerTest extends TestCase
     public function assignTeamPassesMuliAssign()
     {
         $developer = factory(Developer::class)->create();
+        $team1 = factory(Team::class)->create();
+        $team2 = factory(Team::class)->create();
+        $team3 = factory(Team::class)->create();
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
             '/developer/assignTeam',
-            ['id' => $developer->id, 'team_ids' => [4, 5, 6]]
+            [
+                'id' => $developer->id,
+                'team_ids' => [$team1->id, $team2->id, $team3->id]
+            ]
         );
 
         $response->assertStatus(302);

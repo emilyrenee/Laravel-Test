@@ -34,7 +34,7 @@
                 style="margin: 1rem 0; display: flex; flex-direction: column; align-items: flex-start"
             >
                 <p style="margin: 0 0 .5rem 0">{{ $project->name }}</p>
-                <a href="/project/assign?id={{$project->id}}" style="align-self: flex-end">Assign</a>
+                <a href="/project/assignTeam?id={{$project->id}}" style="align-self: flex-end">Assign</a>
                 <hr style="width: 100%;"/>
             </div>
             @endforeach
