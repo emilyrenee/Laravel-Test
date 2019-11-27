@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Developer;
-use App\Repositories\DeveloperRepository;
-use App\Mail\DeveloperCreated;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\Controller;
 use App\Rules\FullName;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use App\Jobs\ProcessEmailJob;
+use App\Http\Controllers\Controller;
+use App\Repositories\DeveloperRepository;
 
 class DeveloperController extends Controller
 {
@@ -43,14 +40,8 @@ class DeveloperController extends Controller
                 $this->developer->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
             }
         }
-
-        $this->sendMail($developer);
+        dispatch(new ProcessEmailJob($developer->id));
         return redirect('/developers');
-    }
-
-    public function sendMail(Developer $developer)
-    {
-        Mail::to('hagoodem@gmail.com')->send(new DeveloperCreated($developer));
     }
 
     public function update(Request $request)

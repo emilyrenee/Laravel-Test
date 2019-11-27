@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Developer;
+use App\Jobs\ProcessEmailJob;
 use App\Team;
 
 class DeveloperControllerTest extends TestCase
@@ -18,12 +19,14 @@ class DeveloperControllerTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Developer create route dispatches email job
+     * and returns 302 status.
      * @test
      * @return void
      */
     public function createPasses()
     {
+        $this->expectsJobs([ProcessEmailJob::class]);
         $developer = factory(Developer::class)->create();
         $response = $this->withHeaders([
             'X-Header' => 'Value',
@@ -32,12 +35,12 @@ class DeveloperControllerTest extends TestCase
             '/developer/create',
             ['name' => $developer->name, 'email' => $developer->email]
         );
-
         $response->assertStatus(302);
     }
 
     /**
-     * A basic test example.
+     * Developer create route fails with invalid name
+     * and returns 422 status and custom error message.
      * @test
      * @return void
      */
@@ -63,7 +66,7 @@ class DeveloperControllerTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Developer update route returns 302 status.
      * @test
      * @return void
      */
@@ -83,7 +86,7 @@ class DeveloperControllerTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Developer delete route returns 302 status.
      * @test
      * @return void
      */
@@ -103,7 +106,7 @@ class DeveloperControllerTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Developer assign team route returns 302 status.
      * @test
      * @return void
      */
@@ -127,7 +130,8 @@ class DeveloperControllerTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Developer assign team route returns 302 status
+     * when assigning many teams.
      * @test
      * @return void
      */
