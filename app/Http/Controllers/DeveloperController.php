@@ -92,9 +92,9 @@ class DeveloperController extends Controller
         $id = $request->get('id');
         $team_ids = $request->get('team_ids');
         foreach ($team_ids as $team_id) {
+            // TODO: only if, that developers_team (by team_id && developer_id does not exists)
             $this->developer->assignTeam(['id' => $id, 'team_id' => $team_id]);
         }
-
 
         return redirect('/developers');
     }
