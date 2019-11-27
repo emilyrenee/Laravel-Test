@@ -19,7 +19,7 @@ class Project extends Model
      */
     public function team()
     {
-        return $this->hasOne('App\Team');
+        return $this->belongsTo('App\Team');
     }
 
     /**

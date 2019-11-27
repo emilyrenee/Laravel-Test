@@ -11,8 +11,10 @@
 |
 */
 
-use App\Project;
 use Illuminate\Http\Request;
+use App\Project;
+use App\Team;
+use Illuminate\Support\Facades\Log;
 
 Auth::routes();
 
@@ -31,9 +33,11 @@ Route::get('/teams', 'PagesController@teams');
 Route::get('/projects', 'PagesController@projects');
 Route::get('/project/assignTeam', function (Request $request) {
     $project = Project::find($request->query('id'));
-    return view('assignProject')->with('project', $project);
+    $teams = Team::all();
+    return view('assignProject')->with('project', $project)->with('teams', $teams);
 });
 Route::post('/project/assignTeam', function (Request $request) {
+    Log::info($request);
     $request->validate([
         'id' => 'required|numeric',
         'team_id' => 'required|numeric',
