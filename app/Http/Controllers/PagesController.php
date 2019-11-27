@@ -32,13 +32,13 @@ class PagesController extends Controller
         return view('developers')->with('developers', $developers);
     }
 
-    public function createDeveloper()
+    public function developerCreate()
     {
         $teamOptions = Team::all();
         return view('createDeveloper')->with('teamOptions', $teamOptions);
     }
 
-    public function updateDeveloper(Request $request)
+    public function developerUpdate(Request $request)
     {
         $developer = Developer::find($request->query('id'));
         $teamOptions = Team::all();
@@ -55,6 +55,13 @@ class PagesController extends Controller
     {
         $projects = Project::all();
         return view('projects')->with('projects', $projects);
+    }
+
+    public function projectAssignTeam(Request $request)
+    {
+        $project = Project::find($request->query('id'));
+        $teams = Team::all();
+        return view('assignProject')->with('project', $project)->with('teams', $teams);
     }
 
     public function tasks()

@@ -55,7 +55,6 @@ class DeveloperController extends Controller
 
     public function update(Request $request)
     {
-        Log::info($request);
         $validatedData = $request->validate([
             'id' => 'required|numeric',
             'name' => ['required', 'string', 'max:255', new FullName],

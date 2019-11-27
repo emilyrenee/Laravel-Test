@@ -3,10 +3,13 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Developer;
+use App\Project;
+use Illuminate\Support\Facades\Log;
 
 class PagesControllerTest extends TestCase
 {
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -14,7 +17,7 @@ class PagesControllerTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Index route returns 200 status code.
      *
      * @return void
      */
@@ -25,7 +28,7 @@ class PagesControllerTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Developers route returns 200 status code.
      *
      * @return void
      */
@@ -36,24 +39,70 @@ class PagesControllerTest extends TestCase
     }
 
     /**
-     * A basic test example.
+     * Get developer create route returns 200 status code.
      *
      * @return void
      */
-    public function testDevelopersCreate()
+    public function testDeveloperCreate()
     {
         $response = $this->get('/developer/create');
         $response->assertStatus(200);
     }
 
     /**
-     * A basic test example.
+     * Get developer update route returns 200 status code.
+     *
+     * @return void
+     */
+    public function testDeveloperUpdate()
+    {
+        $developer = factory(Developer::class)->create();
+        $response = $this->get('/developer/update?id=' . $developer->id);
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Get teams route returns 200 status code.
      *
      * @return void
      */
     public function testTeamsIndex()
     {
         $response = $this->get('/teams');
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Get projects route returns 200 status code.
+     *
+     * @return void
+     */
+    public function testProjectsIndex()
+    {
+        $response = $this->get('/projects');
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Get project assign team route returns 200 status code.
+     *
+     * @return void
+     */
+    public function testProjectsAssignTeam()
+    {
+        $project = factory(Project::class)->create();
+        $response = $this->get('/project/assignTeam?id=' . $project->id);
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Get teams route returns 200 status.
+     *
+     * @return void
+     */
+    public function testTasksIndex()
+    {
+        $response = $this->get('/tasks');
         $response->assertStatus(200);
     }
 }

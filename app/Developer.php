@@ -27,7 +27,6 @@ class Developer extends Model
     {
          // Handle File Upload
          if ($request->hasFile('avatar')) {
-            Log::info('has the file');
             // Get filename with extension            
             $filenameWithExt = $request->file('avatar')->getClientOriginalName();
             // Get just filename

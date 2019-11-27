@@ -77,7 +77,7 @@
                     </div>
                     <br />
                     <input type="submit" style="width: 200px">
-                    @if ($errors && $errors->any())
+                    @if (isset($errors) && $errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
