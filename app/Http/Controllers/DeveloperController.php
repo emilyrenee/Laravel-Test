@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Jobs\ProcessEmailJob;
 use App\Http\Controllers\Controller;
 use App\Repositories\DeveloperRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DeveloperController extends Controller
 {
@@ -80,11 +82,16 @@ class DeveloperController extends Controller
             'team_ids' => 'required|array'
         ]);
 
+        $user = Auth::user();
+        Log::info($user);
+
         $id = $request->get('id');
         $team_ids = $request->get('team_ids');
         foreach ($team_ids as $team_id) {
-            // TODO: only if, that developers_team (by team_id && developer_id does not exists)
-            $this->developer->assignTeam(['id' => $id, 'team_id' => $team_id]);
+            Log::info('before checking to authorize');
+            $this->authorize('assignTeam', ['id' => $id, 'team_id' => $team_id]);
+            // $this->developer->assignTeam(['id' => $id, 'team_id' => $team_id]);
+            Log::info('after checking to authorize');
         }
 
         return redirect('/developers');

@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
-use App\Developer;
-use App\Jobs\ProcessEmailJob;
 use App\Team;
+use App\User;
+use App\Developer;
+use Tests\TestCase;
+use App\Jobs\ProcessEmailJob;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class DeveloperControllerTest extends TestCase
 {
@@ -33,7 +35,10 @@ class DeveloperControllerTest extends TestCase
         ])->json(
             'POST',
             '/developer/create',
-            ['name' => $developer->name, 'email' => $developer->email]
+            [
+                'name' => $developer->name,
+                'email' => $developer->email
+            ]
         );
         $response->assertStatus(302);
     }
@@ -54,7 +59,10 @@ class DeveloperControllerTest extends TestCase
         ])->json(
             'POST',
             '/developer/create',
-            ['name' => $developer->name, 'email' => $developer->email]
+            [
+                'name' => $developer->name,
+                'email' => $developer->email
+            ]
         );
 
         $json = json_decode($response->getContent(), true);
@@ -74,13 +82,18 @@ class DeveloperControllerTest extends TestCase
     {
         $developer = factory(Developer::class)->create();
 
-        $response = $this->withHeaders([
-            'X-Header' => 'Value',
-        ])->json(
-            'POST',
-            '/developer/update',
-            ['name' => 'New Tester', 'email' => 'newtest@test.com', 'id' => $developer->id]
-        );
+        $response = $this
+            ->withHeaders([
+                'X-Header' => 'Value',
+            ])->json(
+                'POST',
+                '/developer/update',
+                [
+                    'name' => 'New Tester',
+                    'email' => 'newtest@test.com',
+                    'id' => $developer->id
+                ]
+            );
 
         $response->assertStatus(302);
     }
@@ -94,13 +107,16 @@ class DeveloperControllerTest extends TestCase
     {
         $developer = factory(Developer::class)->create();
 
-        $response = $this->withHeaders([
-            'X-Header' => 'Value',
-        ])->json(
-            'POST',
-            '/developer/delete',
-            ['id' => $developer->id]
-        );
+        $response = $this
+            ->withHeaders(
+                [
+                    'X-Header' => 'Value',
+                ]
+            )->json(
+                'POST',
+                '/developer/delete',
+                ['id' => $developer->id]
+            );
 
         $response->assertStatus(302);
     }
@@ -114,17 +130,26 @@ class DeveloperControllerTest extends TestCase
     {
         $developer = factory(Developer::class)->create();
         $team = factory(Team::class)->create();
+        $user = factory(User::class)->create();
 
-        $response = $this->withHeaders([
-            'X-Header' => 'Value',
-        ])->json(
-            'POST',
-            '/developer/assignTeam',
-            [
-                'id' => $developer->id,
-                'team_ids' => [$team->id]
-            ]
-        );
+        Log::info('user n test');
+        Log::info($user);
+
+        $response = $this
+            ->actingAs($user)
+            ->withHeaders(
+                [
+                    'X-Header' => 'Value',
+                ]
+            )
+            ->json(
+                'POST',
+                '/developer/assignTeam',
+                [
+                    'id' => $developer->id,
+                    'team_ids' => [$team->id]
+                ]
+            );
 
         $response->assertStatus(302);
     }
@@ -142,16 +167,19 @@ class DeveloperControllerTest extends TestCase
         $team2 = factory(Team::class)->create();
         $team3 = factory(Team::class)->create();
 
-        $response = $this->withHeaders([
-            'X-Header' => 'Value',
-        ])->json(
-            'POST',
-            '/developer/assignTeam',
-            [
-                'id' => $developer->id,
-                'team_ids' => [$team1->id, $team2->id, $team3->id]
-            ]
-        );
+        $response = $this
+            ->withHeaders(
+                [
+                    'X-Header' => 'Value',
+                ]
+            )->json(
+                'POST',
+                '/developer/assignTeam',
+                [
+                    'id' => $developer->id,
+                    'team_ids' => [$team1->id, $team2->id, $team3->id]
+                ]
+            );
 
         $response->assertStatus(302);
     }

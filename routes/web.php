@@ -14,7 +14,6 @@
 use Illuminate\Http\Request;
 use App\Project;
 use App\Task;
-use Illuminate\Support\Facades\Log;
 
 Auth::routes();
 
@@ -34,16 +33,9 @@ Route::post('/developer/update', 'DeveloperController@update');
 Route::post('/developer/delete', 'DeveloperController@delete');
 Route::post('/developer/assignTeam', 'DeveloperController@assignTeam');
 
-Route::post('/project/assignTeam', function (Request $request) {
-    $request->validate([
-        'id' => 'required|numeric',
-        'team_id' => 'required|numeric',
-    ]);
-    $project = Project::find($request->get('id'));
-    $project->team_id = $request->get('team_id');
-    $project->save();
-    return redirect('/projects');
-});
+Route::post('/project/assignTeam', 'ProjectController@team');
+Route::post('/project/assignTask', 'ProjectController@task');
+
 Route::post('/team/assignProject', function (Request $request) {
     $request->validate([
         'id' => 'required|numeric',
@@ -64,14 +56,5 @@ Route::post('/task/assignProject', function (Request $request) {
     $task->save();
     return redirect('/tasks');
 });
-Route::post('/project/assignTask', function (Request $request) {
-    $request->validate([
-        'id' => 'required|numeric',
-        'task_id' => 'required|numeric',
-    ]);
-    $task = Task::find($request->get('task_id'));
-    $task->project_id = $request->get('id');
-    $task->save();
-    return redirect('/projects');
-});
+
 

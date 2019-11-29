@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class Developer extends Model
@@ -25,8 +26,8 @@ class Developer extends Model
 
     public function create($request, array $attributes = [])
     {
-         // Handle File Upload
-         if ($request->hasFile('avatar')) {
+        // Handle File Upload
+        if ($request->hasFile('avatar')) {
             // Get filename with extension            
             $filenameWithExt = $request->file('avatar')->getClientOriginalName();
             // Get just filename
@@ -56,5 +57,18 @@ class Developer extends Model
         $developer->email = $attributes['email'];
         $developer->save();
         return $developer;
+    }
+
+    public function assignTeam(array $attributes = [], array $options = [])
+    {
+        $user = auth()->user();
+        if ($user->can('assignTeam', $attributes)) {
+            $this->developer->assignTeam(
+                [
+                    'id' => $attributes['id'],
+                    'team_id' => $attributes['team_id']
+                ]
+            );
+        }
     }
 }
