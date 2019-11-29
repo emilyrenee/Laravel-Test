@@ -34,7 +34,7 @@ class Developer extends Model
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
             $extension = $request->file('avatar')->getClientOriginalExtension();
-            //Filename to store
+            // Filename to store
             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $request->file('avatar')->storeAs('public/avatars', $fileNameToStore);
@@ -61,14 +61,11 @@ class Developer extends Model
 
     public function assignTeam(array $attributes = [], array $options = [])
     {
-        $user = auth()->user();
-        if ($user->can('assignTeam', $attributes)) {
-            $this->developer->assignTeam(
-                [
-                    'id' => $attributes['id'],
-                    'team_id' => $attributes['team_id']
-                ]
-            );
-        }
+        $this->developer->assignTeam(
+            [
+                'id' => $attributes['id'],
+                'team_id' => $attributes['team_id']
+            ]
+        );
     }
 }
