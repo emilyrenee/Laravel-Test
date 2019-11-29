@@ -132,9 +132,6 @@ class DeveloperControllerTest extends TestCase
         $team = factory(Team::class)->create();
         $user = factory(User::class)->create();
 
-        Log::info('user n test');
-        Log::info($user);
-
         $response = $this
             ->actingAs($user)
             ->withHeaders(
