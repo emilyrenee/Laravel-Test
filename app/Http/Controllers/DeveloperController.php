@@ -28,12 +28,6 @@ class DeveloperController extends Controller
             'timezone' => 'required_if:is_local,false'
         ]);
 
-        // if ($request->has('personal_site')) {
-        //     $request->validate([
-        //         'personal_site' => 'url',
-        //     ]);
-        // }
-
         $developer = $this->developerRepo->create($request, $validatedData);
 
         if ($request->get('team_ids')) {

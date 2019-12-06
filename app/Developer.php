@@ -73,7 +73,9 @@ class Developer extends Model
         $developer = new Developer();
         $developer->name = $attributes['name'];
         $developer->email = $attributes['email'];
-        $developer->personal_site = $attributes['personal_site'];
+        if (array_key_exists ('personal_site' , $attributes)) {
+            $developer->personal_site = $attributes['personal_site'];
+        }
         $developer->avatar = $fileNameToStore;
         $developer->save();
         return $developer;
