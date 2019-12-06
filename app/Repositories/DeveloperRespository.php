@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Developer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 // model is injected in
 class DeveloperRepository
@@ -34,9 +36,10 @@ class DeveloperRepository
     {
         $developer = Developer::find($attributes['id']);
         $developer_team = $developer->teams()->where('team_id', $attributes['team_id'])->count();
-        if ($developer_team === 0) {
-            $developer->teams()->attach($attributes['team_id']);
-        }
-        return $developer;
+       
+            if ($developer_team === 0) {
+                $developer->teams()->attach($attributes['team_id']);
+            }
+            return $developer;
     }
 }

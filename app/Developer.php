@@ -61,11 +61,16 @@ class Developer extends Model
 
     public function assignTeam(array $attributes = [], array $options = [])
     {
-        $this->developer->assignTeam(
-            [
-                'id' => $attributes['id'],
-                'team_id' => $attributes['team_id']
-            ]
-        );
+        $user = Auth::user();
+        $developer = new Developer();
+        if ($user->can('assignTeam', $developer)) {
+            $this->developer->assignTeam(
+                [
+                    'id' => $attributes['id'],
+                    'team_id' => $attributes['team_id']
+                ]
+            );
+          }
+        
     }
 }

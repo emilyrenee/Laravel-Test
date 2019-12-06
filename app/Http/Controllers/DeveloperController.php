@@ -7,15 +7,16 @@ use Illuminate\Http\Request;
 use App\Jobs\ProcessEmailJob;
 use App\Http\Controllers\Controller;
 use App\Repositories\DeveloperRepository;
+use Illuminate\Support\Facades\Log;
 
 class DeveloperController extends Controller
 {
-    private $developer;
+    private $developerRepo;
     protected $fillable = ['name', 'email', 'avatar', 'personal_site', 'is_local', 'timezone'];
 
     public function __construct(DeveloperRepository $developerRepository)
     {
-        $this->developer = $developerRepository;
+        $this->developerRepo = $developerRepository;
     }
 
     public function create(Request $request)
@@ -33,11 +34,11 @@ class DeveloperController extends Controller
             ]);
         }
 
-        $developer = $this->developer->create($request, $validatedData);
+        $developer = $this->developerRepo->create($request, $validatedData);
 
         if ($request->get('team_ids')) {
             foreach ($request->get('team_ids') as $team_id) {
-                $this->developer->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
+                $this->developerRepo->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
             }
         }
         dispatch(new ProcessEmailJob($developer->id));
@@ -52,12 +53,12 @@ class DeveloperController extends Controller
             'email' => 'required|email|max:255',
             'personal_site' => 'url'
         ]);
-        
-        $developer = $this->developer->update($validatedData);
+
+        $developer = $this->developerRepo->update($validatedData);
 
         if ($request->get('team_ids')) {
             foreach ($request->get('team_ids') as $team_id) {
-                $this->developer->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
+                $this->developerRepo->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
             }
         }
 
@@ -69,7 +70,7 @@ class DeveloperController extends Controller
         $validatedData = $request->validate([
             'id' => 'required|numeric'
         ]);
-        $this->developer->delete($validatedData);
+        $this->developerRepo->delete($validatedData);
         return redirect('/developers');
     }
 
@@ -82,8 +83,12 @@ class DeveloperController extends Controller
 
         $id = $request->get('id');
         $team_ids = $request->get('team_ids');
-        foreach ($team_ids as $team_id) {
-            $this->developer->assignTeam(['id' => $id, 'team_id' => $team_id]);
+        foreach ($team_ids as $team_id) {                
+            $this->authorize('assignTeam');
+            $this->developerRepo->assignTeam([
+                'id' => $id,
+                'team_id' => $team_id
+            ]);
         }
 
         return redirect('/developers');

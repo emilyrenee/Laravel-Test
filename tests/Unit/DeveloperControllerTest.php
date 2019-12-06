@@ -130,7 +130,8 @@ class DeveloperControllerTest extends TestCase
     {
         $developer = factory(Developer::class)->create();
         $team = factory(Team::class)->create();
-        $user = factory(User::class)->create();
+        $user = factory(User::class)->make(['user_role_id' => 1]);
+
 
         $response = $this
             ->actingAs($user)
@@ -163,8 +164,10 @@ class DeveloperControllerTest extends TestCase
         $team1 = factory(Team::class)->create();
         $team2 = factory(Team::class)->create();
         $team3 = factory(Team::class)->create();
+        $user = factory(User::class)->make(['user_role_id' => 1]);
 
         $response = $this
+            ->actingAs($user)
             ->withHeaders(
                 [
                     'X-Header' => 'Value',
