@@ -24,15 +24,17 @@ class DeveloperController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255', new FullName],
             'email' => 'required|email|max:255',
-            'avatar' => 'file',
+            // 'avatar' => 'mimes:jpeg,png',
             'timezone' => 'required_if:is_local,false'
         ]);
 
-        if ($request->has('personal_site')) {
-            $request->validate([
-                'personal_site' => 'url',
-            ]);
-        }
+        Log::info($validatedData);
+
+        // if ($request->has('personal_site')) {
+        //     $request->validate([
+        //         'personal_site' => 'url',
+        //     ]);
+        // }
 
         $developer = $this->developerRepo->create($request, $validatedData);
 

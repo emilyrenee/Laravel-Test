@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -30,14 +31,44 @@ class Developer extends Model
         if ($request->hasFile('avatar')) {
             // Get filename with extension            
             $filenameWithExt = $request->file('avatar')->getClientOriginalName();
+
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+            Log::info($filename);
+
             // Get just ext
             $extension = $request->file('avatar')->getClientOriginalExtension();
+
             // Filename to store
             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-            // Upload Image
+
+            //small thumbnail name
+            $smallthumbnail = $filename . '_small_' . time() . '.' . $extension;
+
+            //medium thumbnail name
+            $mediumthumbnail = $filename . '_medium_' . time() . '.' . $extension;
+
+            //large thumbnail name
+            $largethumbnail = $filename . '_large_' . time() . '.' . $extension;
+
+            // Upload Images
             $request->file('avatar')->storeAs('public/avatars', $fileNameToStore);
+            $request->file('avatar')->storeAs('public/avatars/thumbnail', $smallthumbnail);
+            $request->file('avatar')->storeAs('public/avatars/thumbnail', $mediumthumbnail);
+            $request->file('avatar')->storeAs('public/avatars/thumbnail', $largethumbnail);
+
+            //create small thumbnail
+            $smallthumbnailpath = public_path('storage/avatars/thumbnail/' . $smallthumbnail);
+            $this->createThumbnail($smallthumbnailpath, 150, 93);
+
+            //create medium thumbnail
+            $mediumthumbnailpath = public_path('storage/avatars/thumbnail/' . $mediumthumbnail);
+            $this->createThumbnail($mediumthumbnailpath, 300, 185);
+
+            //create large thumbnail
+            $largethumbnailpath = public_path('storage/avatars/thumbnail/' . $largethumbnail);
+            $this->createThumbnail($largethumbnailpath, 550, 340);
         } else {
             $fileNameToStore = 'noimage.jpg';
         }
@@ -70,7 +101,21 @@ class Developer extends Model
                     'team_id' => $attributes['team_id']
                 ]
             );
-          }
-        
+        }
+    }
+
+    /**
+     * Create a thumbnail of specified size
+     *
+     * @param string $path path of thumbnail
+     * @param int $width
+     * @param int $height
+     */
+    public function createThumbnail($path, $width, $height)
+    {
+        $img = Image::make($path)->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($path);
     }
 }

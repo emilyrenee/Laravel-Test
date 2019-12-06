@@ -20,7 +20,7 @@
             height: 100vh;
             margin: 0;
         }
-        
+
         h2 {
             font-size: 1.25rem;
             margin-bottom: .25rem;
@@ -98,8 +98,9 @@
     <script>
         const handleCreateDeveloper = async (e) => {
             const fields = ['name', 'email', 'avatar', 'is_local', 'timezone'];
-
+            formData = new FormData();
             let data = {};
+
             fields.forEach(field => {
                 value = document.getElementById(field) &&
                     document.getElementById(field).value ?
@@ -109,6 +110,10 @@
                     ...data,
                     [field]: value
                 };
+                if (value !== null) {
+                    console.log('seting');
+                    formData.set([field], value);
+                }
             });
 
             const selectFields = Array.from(document.getElementsByTagName('option'));
@@ -120,16 +125,34 @@
                     field.value :
                     null;
                 team_ids = [...team_ids, value];
+                console.log('seting');
+                formData.set('team_ids', [...team_ids.filter(id => id !== null), value]);
             });
 
 
             const filterNullValues = (object) => Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
             filterNullValues(data);
 
-            await axios.post('/developer/create', {
+            // remove weird file path
+            if (data.avatar) {
+                data = {
                     ...data,
-                    "_token": "{{ csrf_token() }}",
-                    "team_ids": team_ids.filter(id => id !== null)
+                    avatar: data.avatar.replace("C:\\fakepath\\", "")
+                };
+            }
+
+
+            formData.set('Emily', 'emily');
+            console.log('formData', formData);
+
+            console.log('sumthing??', formData.get('Emily'));
+            console.log('sumthing??', formData.get('name'));
+            console.log('sumthing??', formData.get('email'));
+
+            await axios.post('/developer/create', {
+                    formData,
+                    "_token": "{{ csrf_token() }}"
+                    // "team_ids": team_ids.filter(id => id !== null)
                 })
                 .then(function(response) {
                     console.log('response', response);
