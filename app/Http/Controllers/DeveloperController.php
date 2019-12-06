@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Jobs\ProcessEmailJob;
 use App\Http\Controllers\Controller;
 use App\Repositories\DeveloperRepository;
-use Illuminate\Support\Facades\Log;
 
 class DeveloperController extends Controller
 {
@@ -24,11 +23,10 @@ class DeveloperController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255', new FullName],
             'email' => 'required|email|max:255',
-            // 'avatar' => 'mimes:jpeg,png',
+            'avatar' => 'mimes:jpeg,png',
+            'personal_site' => 'nullable|regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
             'timezone' => 'required_if:is_local,false'
         ]);
-
-        Log::info($validatedData);
 
         // if ($request->has('personal_site')) {
         //     $request->validate([

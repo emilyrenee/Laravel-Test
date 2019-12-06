@@ -7,7 +7,6 @@ use App\Developer;
 use App\Team;
 use App\Project;
 use App\Task;
-use Illuminate\Support\Facades\Log;
 
 class PagesController extends Controller
 {

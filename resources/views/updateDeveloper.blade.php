@@ -55,7 +55,7 @@
                     </div>
                     <div class="form-input">
                         <label for="timezone">Personal Site</label>
-                        <input type="text" name="personal_site" id="personal_site" value="{{$developer->url}}">
+                        <input type="text" name="personal_site" id="personal_site" value="{{$developer->personal_site}}">
                     </div>
                     <div class="form-input">
                         <label for="team_ids">Select one or more team(s)</label>

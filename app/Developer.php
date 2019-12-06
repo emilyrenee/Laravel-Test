@@ -5,7 +5,6 @@ namespace App;
 use Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class Developer extends Model
 {
@@ -35,8 +34,6 @@ class Developer extends Model
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
 
-            Log::info($filename);
-
             // Get just ext
             $extension = $request->file('avatar')->getClientOriginalExtension();
 
@@ -58,15 +55,15 @@ class Developer extends Model
             $request->file('avatar')->storeAs('public/avatars/thumbnail', $mediumthumbnail);
             $request->file('avatar')->storeAs('public/avatars/thumbnail', $largethumbnail);
 
-            //create small thumbnail
+            // Create small thumbnail
             $smallthumbnailpath = public_path('storage/avatars/thumbnail/' . $smallthumbnail);
             $this->createThumbnail($smallthumbnailpath, 150, 93);
 
-            //create medium thumbnail
+            // Create medium thumbnail
             $mediumthumbnailpath = public_path('storage/avatars/thumbnail/' . $mediumthumbnail);
             $this->createThumbnail($mediumthumbnailpath, 300, 185);
 
-            //create large thumbnail
+            // Create large thumbnail
             $largethumbnailpath = public_path('storage/avatars/thumbnail/' . $largethumbnail);
             $this->createThumbnail($largethumbnailpath, 550, 340);
         } else {
@@ -76,6 +73,7 @@ class Developer extends Model
         $developer = new Developer();
         $developer->name = $attributes['name'];
         $developer->email = $attributes['email'];
+        $developer->personal_site = $attributes['personal_site'];
         $developer->avatar = $fileNameToStore;
         $developer->save();
         return $developer;

@@ -21,7 +21,6 @@
         </div>
 
         <div style="margin: 2rem 0;">
-            <!-- <form onsubmit="event.preventDefault(); return handleCreateDeveloper(event)"> -->
             <form method="post" action="/developer/create" enctype="multipart/form-data">
                 @csrf
                 <div class="form-inner">

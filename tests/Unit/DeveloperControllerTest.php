@@ -7,7 +7,6 @@ use App\User;
 use App\Developer;
 use Tests\TestCase;
 use App\Jobs\ProcessEmailJob;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class DeveloperControllerTest extends TestCase
