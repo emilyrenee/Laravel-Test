@@ -36,7 +36,8 @@ class DeveloperControllerTest extends TestCase
             '/developer/create',
             [
                 'name' => $developer->name,
-                'email' => $developer->email
+                'email' => $developer->email,
+                'personal_site' => $developer->personal_site
             ]
         );
         $response->assertStatus(302);
@@ -60,7 +61,8 @@ class DeveloperControllerTest extends TestCase
             '/developer/create',
             [
                 'name' => $developer->name,
-                'email' => $developer->email
+                'email' => $developer->email,
+                'personal_site' => $developer->personal_site
             ]
         );
 

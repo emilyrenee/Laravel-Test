@@ -35,7 +35,7 @@ class DeveloperController extends Controller
                 $this->developerRepo->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
             }
         }
-        dispatch(new ProcessEmailJob($developer->id));
+        dispatch(new ProcessEmailJob($developer->id))->onQueue('high');
         return redirect('/developers');
     }
 
