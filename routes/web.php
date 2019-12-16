@@ -33,6 +33,10 @@ Route::post('/developer/update', 'DeveloperController@update');
 Route::post('/developer/delete', 'DeveloperController@delete');
 Route::post('/developer/assignTeam', 'DeveloperController@assignTeam');
 
+// TODO: resourceful routes for projects 
+Route::post('/project/create', 'ProjectController@create');
+Route::post('/project/update', 'ProjectController@update');
+Route::post('/project/delete', 'ProjectController@delete');
 Route::post('/project/assignTeam', 'ProjectController@team');
 Route::post('/project/assignTask', 'ProjectController@task');
 

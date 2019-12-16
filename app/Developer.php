@@ -129,6 +129,7 @@ class Developer extends Model
         $img = Image::make($path)->resize($width, $height, function ($constraint) {
             $constraint->aspectRatio();
         });
+        
         $img->save($path);
     }
 }

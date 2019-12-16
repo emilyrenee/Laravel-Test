@@ -59,4 +59,64 @@ class ProjectControllerTest extends TestCase
 
         $response->assertStatus(302);
     }
+
+    /**
+     * Project create route returns 201 status.
+     * @test
+     * @return void
+     */
+    public function createPasses()
+    {
+        $project = factory(Project::class)->create();
+
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/project/create',
+            ['name' => $project->name]
+        );
+
+        $response->assertStatus(201);
+    }
+
+    /**
+     * Project update route returns 200 status.
+     * @test
+     * @return void
+     */
+    public function updatePasses()
+    {
+        $project = factory(Project::class)->create();
+
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/project/update',
+            ['name' => $project->name, 'team_id' => 4, 'id' => $project->id]
+        );
+
+        $response->assertStatus(200);
+    }
+
+     /**
+     * Project delete route returns 200 status.
+     * @test
+     * @return void
+     */
+    public function deletePasses()
+    {
+        $project = factory(Project::class)->create();
+
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/project/delete',
+            ['id' => $project->id]
+        );
+
+        $response->assertStatus(200);
+    }
 }
