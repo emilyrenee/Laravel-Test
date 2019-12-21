@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Api;
 
 use App\Task;
 use App\Team;
@@ -32,8 +32,11 @@ class ProjectControllerTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/project/assignTask',
-            ['id' => $project->id, 'task_id' => $task->id]
+            '/api/project/assignTask',
+            [
+                'id' => $project->id,
+                'task_id' => $task->id
+            ]
         );
 
         $response->assertStatus(302);
@@ -53,8 +56,11 @@ class ProjectControllerTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/project/assignTeam',
-            ['id' => $project->id, 'team_id' => $team->id]
+            '/api/project/assignTeam',
+            [
+                'id' => $project->id,
+                'team_id' => $team->id
+            ]
         );
 
         $response->assertStatus(302);
@@ -73,7 +79,7 @@ class ProjectControllerTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/project/create',
+            '/api/project/create',
             ['name' => $project->name]
         );
 
@@ -93,8 +99,12 @@ class ProjectControllerTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/project/update',
-            ['name' => $project->name, 'team_id' => 4, 'id' => $project->id]
+            '/api/project/update',
+            [
+                'name' => $project->name,
+                'team_id' => 4, 
+                'id' => $project->id
+            ]
         );
 
         $response->assertStatus(200);
@@ -113,7 +123,7 @@ class ProjectControllerTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/project/delete',
+            '/api/project/delete',
             ['id' => $project->id]
         );
 

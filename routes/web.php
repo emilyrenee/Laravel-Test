@@ -28,17 +28,21 @@ Route::get('/projects', 'PagesController@projects');
 Route::get('/project/assignTeam', 'PagesController@projectAssignTeam');
 Route::get('/tasks', 'PagesController@tasks');
 
-Route::post('/developer/create', 'DeveloperController@create');
-Route::post('/developer/update', 'DeveloperController@update');
-Route::post('/developer/delete', 'DeveloperController@delete');
-Route::post('/developer/assignTeam', 'DeveloperController@assignTeam');
+Route::prefix('api')->group(function () {
+    Route::post('/developer/create', 'DeveloperController@create');
+    Route::post('/developer/update', 'DeveloperController@update');
+    Route::post('/developer/delete', 'DeveloperController@delete');
+    Route::post('/developer/assignTeam', 'DeveloperController@assignTeam');
 
-// TODO: resourceful routes for projects 
-Route::post('/project/create', 'ProjectController@create');
-Route::post('/project/update', 'ProjectController@update');
-Route::post('/project/delete', 'ProjectController@delete');
-Route::post('/project/assignTeam', 'ProjectController@team');
-Route::post('/project/assignTask', 'ProjectController@task');
+    // TODO: resourceful routes for projects 
+    Route::post('/project/create', 'ProjectController@create');
+    Route::post('/project/update', 'ProjectController@update');
+    Route::post('/project/delete', 'ProjectController@delete');
+    Route::post('/project/assignTeam', 'ProjectController@team');
+    Route::post('/project/assignTask', 'ProjectController@task');
+});
+
+
 
 Route::post('/team/assignProject', function (Request $request) {
     $request->validate([

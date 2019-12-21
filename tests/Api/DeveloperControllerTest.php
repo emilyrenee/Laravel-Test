@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Api;
 
 use App\Team;
 use App\User;
@@ -25,21 +25,28 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function createPasses()
+    public function create_should_insert_and_redirect()
     {
         $this->expectsJobs([ProcessEmailJob::class]);
         $developer = factory(Developer::class)->create();
+
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/developer/create',
+            '/api/developer/create',
             [
                 'name' => $developer->name,
                 'email' => $developer->email,
                 'personal_site' => $developer->personal_site
             ]
         );
+
+        $newDevloper = collect(Developer::find($developer->id));
+        $this->assertEquals($newDevloper['name'], $developer->name);
+        $this->assertEquals($newDevloper['email'], $developer->email);
+        $this->assertEquals($newDevloper['personal_site'], $developer->personal_site);
+
         $response->assertStatus(302);
     }
 
@@ -49,7 +56,7 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function createFails()
+    public function create_should_fail_and_return_custom_error_message()
     {
         $developer = factory(Developer::class)->create(['name' => 'DoesntPass']);
 
@@ -58,7 +65,7 @@ class DeveloperControllerTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/developer/create',
+            '/api/developer/create',
             [
                 'name' => $developer->name,
                 'email' => $developer->email,
@@ -79,22 +86,28 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function updatePasses()
+    public function update_should_should_persist_and_redirect()
     {
         $developer = factory(Developer::class)->create();
+        $newName = 'New Tester';
+        $newEmail = 'newtest@test.com';
 
         $response = $this
             ->withHeaders([
                 'X-Header' => 'Value',
             ])->json(
                 'POST',
-                '/developer/update',
+                '/api/developer/update',
                 [
-                    'name' => 'New Tester',
-                    'email' => 'newtest@test.com',
+                    'name' => $newName,
+                    'email' => $newEmail,
                     'id' => $developer->id
                 ]
             );
+
+        $updatedDevloper = collect(Developer::find($developer->id));
+        $this->assertEquals($newName, $updatedDevloper['name']);
+        $this->assertEquals($newEmail, $updatedDevloper['email']);   
 
         $response->assertStatus(302);
     }
@@ -104,7 +117,7 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function deletePasses()
+    public function delete_should_remove_and_redirect()
     {
         $developer = factory(Developer::class)->create();
 
@@ -115,9 +128,12 @@ class DeveloperControllerTest extends TestCase
                 ]
             )->json(
                 'POST',
-                '/developer/delete',
+                '/api/developer/delete',
                 ['id' => $developer->id]
             );
+
+        $deletedDeveloper = (Developer::find($developer->id));
+        $this->assertEquals(null, $deletedDeveloper);
 
         $response->assertStatus(302);
     }
@@ -127,7 +143,7 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function assignTeamPasses()
+    public function assign_team_persists_and_redirects()
     {
         $developer = factory(Developer::class)->create();
         $team = factory(Team::class)->create();
@@ -143,12 +159,19 @@ class DeveloperControllerTest extends TestCase
             )
             ->json(
                 'POST',
-                '/developer/assignTeam',
+                '/api/developer/assignTeam',
                 [
                     'id' => $developer->id,
                     'team_ids' => [$team->id]
                 ]
             );
+
+        $updatedCount = \DB::table('developers_teams')
+            ->where([
+                ['developer_id', '=', $developer->id],
+                ['team_id', '=', $team->id],
+            ])->count();
+        $this->assertEquals(1, $updatedCount);
 
         $response->assertStatus(302);
     }
@@ -159,13 +182,14 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function assignTeamPassesMuliAssign()
+    public function assign_team_persist_when_multi_assigned_and_redirects()
     {
         $developer = factory(Developer::class)->create();
         $team1 = factory(Team::class)->create();
         $team2 = factory(Team::class)->create();
         $team3 = factory(Team::class)->create();
         $user = factory(User::class)->make(['user_role_id' => 1]);
+        $team_ids = [$team1->id, $team2->id, $team3->id];
 
         $response = $this
             ->actingAs($user)
@@ -175,23 +199,19 @@ class DeveloperControllerTest extends TestCase
                 ]
             )->json(
                 'POST',
-                '/developer/assignTeam',
+                '/api/developer/assignTeam',
                 [
                     'id' => $developer->id,
-                    'team_ids' => [$team1->id, $team2->id, $team3->id]
+                    'team_ids' => $team_ids
                 ]
             );
 
         $response->assertStatus(302);
-    }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function facadeWorks()
-    {
-        $result = \App\Facades\Developer::sayHello();
-        $this->assertEquals($result, "Hello World from Facade!");
+        $updatedCount = \DB::table('developers_teams')
+            ->where([
+                ['developer_id', '=', $developer->id],
+            ])->count();
+        $this->assertEquals(count($team_ids), $updatedCount);
     }
 }

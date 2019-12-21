@@ -36,6 +36,7 @@ class DeveloperController extends Controller
             }
         }
         dispatch(new ProcessEmailJob($developer->id))->onQueue('high');
+
         return redirect('/developers');
     }
 
@@ -64,7 +65,9 @@ class DeveloperController extends Controller
         $validatedData = $request->validate([
             'id' => 'required|numeric'
         ]);
+
         $this->developerRepo->delete($validatedData);
+        
         return redirect('/developers');
     }
 
@@ -77,6 +80,7 @@ class DeveloperController extends Controller
 
         $id = $request->get('id');
         $team_ids = $request->get('team_ids');
+
         foreach ($team_ids as $team_id) {                
             $this->authorize('assignTeam');
             $this->developerRepo->assignTeam([

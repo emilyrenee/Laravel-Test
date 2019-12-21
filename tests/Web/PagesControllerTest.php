@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Web;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
-use App\Developer;
 use App\Project;
+use App\Developer;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PagesControllerTest extends TestCase
 {

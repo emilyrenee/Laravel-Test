@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Api;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
-use App\Project;
 use App\Task;
+use App\Project;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TaskAssignProjectTest extends TestCase
 {
