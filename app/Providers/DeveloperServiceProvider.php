@@ -7,8 +7,8 @@ use Illuminate\Support\ServiceProvider;
 
 class DeveloperServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap services.
+     /**
+     * Bootstrap the application services.
      *
      * @return void
      */
@@ -16,7 +16,7 @@ class DeveloperServiceProvider extends ServiceProvider
     {
         //
     }
-
+    
     /**
      * Register services.
      *
@@ -24,8 +24,8 @@ class DeveloperServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-        $this->app->bind('developer', function () {
+        $this->app->bind('developer', function()
+        {
             return new Developer();
         });
     }

@@ -184,4 +184,14 @@ class DeveloperControllerTest extends TestCase
 
         $response->assertStatus(302);
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function facadeWorks()
+    {
+        $result = \App\Facades\Developer::sayHello();
+        $this->assertEquals($result, "Hello World from Facade!");
+    }
 }

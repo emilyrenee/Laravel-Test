@@ -132,4 +132,9 @@ class Developer extends Model
         
         $img->save($path);
     }
+
+    public function sayHello()
+    {
+        return "Hello World from Facade!";
+    }
 }
