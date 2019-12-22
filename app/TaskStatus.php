@@ -6,7 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class TaskStatus extends Model
 {
-    public function task() {
-        // belongs to task
-    }
+    // TODO:
 }

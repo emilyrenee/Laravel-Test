@@ -29,10 +29,10 @@
         </div>
 
         <div style="margin: 2rem 0;">
-            <form onsubmit="event.preventDefault(); return handleUpdateDeveloper(event)">
+            <form method="post" action="/api/developer/update" enctype="multipart/form-data">
                 @csrf
                 <div class="form-inner">
-                    <input type="hidden" name="name" id="id" value="{{$developer->id}}">
+                    <input type="hidden" name="id" id="id" value="{{$developer->id}}">
                     <div class="form-input">
                         <label for="name">Name*</label>
                         <input type="text" name="name" id="name" value="{{$developer->name}}">
@@ -42,8 +42,13 @@
                         <input type="text" name="email" id="email" value="{{$developer->email}}">
                     </div>
                     <div class="form-input">
-                        <label for="avatar">Avatar</label>
-                        <input type="file" name="avatar" id="avatar">
+                        <div style="display: flex; justify-content: space-between">
+                            <label for="avatar">Avatar</label>
+                            <a href="#" style="text-align: right"><small>Edit</small></a>
+                        </div>
+                        <span style="text-align: left">{{$developer->avatar}}</span>
+                        <!-- TODO: get this working too -->
+                        <!-- <input type="file" name="avatar" id="avatar" value="{{$developer->avatar}}"> -->
                     </div>
                     <div class="form-input-row">
                         <label for="is_local">Developer is local resident?</label>&nbsp;

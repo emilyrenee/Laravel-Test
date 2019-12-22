@@ -14,14 +14,6 @@ class Task extends Model
         return $this->belongsTo('App\Developer');
     }
 
-    // /**
-    //  * Get the team for the task.
-    //  */
-    // public function team()
-    // {
-    //     return $this->morphOne('App\Team', 'teamable');
-    // }
-
     /**
      * Get the project for the task.
      */

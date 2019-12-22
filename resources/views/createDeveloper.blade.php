@@ -21,7 +21,7 @@
         </div>
 
         <div style="margin: 2rem 0;">
-            <form method="post" action="/developer/create" enctype="multipart/form-data">
+            <form method="post" action="/api/developer/create" enctype="multipart/form-data">
                 @csrf
                 <div class="form-inner">
                     <div class="form-input">

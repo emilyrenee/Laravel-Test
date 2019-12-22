@@ -23,7 +23,7 @@ class ProjectControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function taskPasses()
+    public function assign_task_relates_task_to_project_and_redirects()
     {
         $project = factory(Project::class)->create();
         $task = factory(Task::class)->create();
@@ -39,6 +39,9 @@ class ProjectControllerTest extends TestCase
             ]
         );
 
+        $updatedTask = collect(Task::find($task->id));
+
+        $this->assertEquals($project->id, $updatedTask['project_id']);
         $response->assertStatus(302);
     }
 
@@ -63,6 +66,9 @@ class ProjectControllerTest extends TestCase
             ]
         );
 
+        $updatedProject = collect(Project::find($project->id));
+
+        $this->assertEquals($team->id, $updatedProject['team_id']);
         $response->assertStatus(302);
     }
 
@@ -83,6 +89,9 @@ class ProjectControllerTest extends TestCase
             ['name' => $project->name]
         );
 
+        $newProject = collect(Project::find($project->id));
+        
+        $this->assertEquals($project->name, $newProject['name']);
         $response->assertStatus(201);
     }
 
@@ -107,6 +116,9 @@ class ProjectControllerTest extends TestCase
             ]
         );
 
+        $updatedProject = collect(Project::find($project->id));
+        
+        $this->assertEquals($project->name, $updatedProject['name']);
         $response->assertStatus(200);
     }
 
@@ -127,6 +139,9 @@ class ProjectControllerTest extends TestCase
             ['id' => $project->id]
         );
 
+        $deletedProject = Project::find($project->id);
+        
+        $this->assertEquals(null, $deletedProject);
         $response->assertStatus(200);
     }
 }

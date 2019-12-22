@@ -2,12 +2,12 @@
 
 namespace Tests\Api;
 
-use App\Task;
+use App\Team;
 use App\Project;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class TaskAssignProjectTest extends TestCase
+class TeamAssignProjectsTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -18,23 +18,26 @@ class TaskAssignProjectTest extends TestCase
     }
 
     /**
-     * Task assign project route returns 302 status.
+     * Team assign project route returns 302 status.
      * @test
      * @return void
      */
-    public function assignProjectPasses()
+    public function assign_project_associates_project_with_team()
     {
         $project = factory(Project::class)->create();
-        $task = factory(Task::class)->create();
+        $team = factory(Team::class)->create();
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/task/assignProject',
-            ['id' => $task->id, 'project_id' => $project->id]
+            'api/team/assignProject',
+            ['id' => $team->id, 'project_id' => $project->id]
         );
 
+        $updatedProject = Project::find($project->id);
+
+        $this->assertEquals($team->id, $updatedProject->team_id);
         $response->assertStatus(302);
     }
 }

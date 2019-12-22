@@ -7,6 +7,8 @@ use App\User;
 use App\Developer;
 use Tests\TestCase;
 use App\Jobs\ProcessEmailJob;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class DeveloperControllerTest extends TestCase
@@ -25,10 +27,47 @@ class DeveloperControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function create_should_insert_and_redirect()
+    public function create_should_dispatch_job_insert_and_redirect()
     {
         $this->expectsJobs([ProcessEmailJob::class]);
         $developer = factory(Developer::class)->create();
+        $newName = $developer->name;
+        $newEmail = $developer->email;
+        $newSite = $developer->personal_site;
+
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json(
+            'POST',
+            '/api/developer/create',
+            [
+                'name' => $newName,
+                'email' => $newEmail,
+                'personal_site' => $newSite
+            ]
+        );
+
+        $newDevloper = collect(Developer::find($developer->id));
+        
+        $this->assertEquals($newName, $newDevloper['name']);
+        $this->assertEquals($newEmail, $newDevloper['email']);
+        $this->assertEquals($newSite, $newDevloper['personal_site']);
+
+        $response->assertStatus(302);
+    }
+
+    /**
+     * Developer create stores uploaded avatar image
+     * and returns 302 status.
+     * @test
+     * @return void
+     */
+    public function create_should_store_uploaded_avatar()
+    {
+        Storage::fake('avatars');
+
+        $developer = factory(Developer::class)->create();
+        $avatarFile = UploadedFile::fake()->image('avatar.jpg');
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
@@ -38,16 +77,24 @@ class DeveloperControllerTest extends TestCase
             [
                 'name' => $developer->name,
                 'email' => $developer->email,
-                'personal_site' => $developer->personal_site
+                'personal_site' => $developer->personal_site,
+                'avatar' => $avatarFile
             ]
         );
 
-        $newDevloper = collect(Developer::find($developer->id));
-        $this->assertEquals($newDevloper['name'], $developer->name);
-        $this->assertEquals($newDevloper['email'], $developer->email);
-        $this->assertEquals($newDevloper['personal_site'], $developer->personal_site);
+        $filenameWithExt = $avatarFile->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $avatarFile->getClientOriginalExtension();
 
-        $response->assertStatus(302);
+        $expectedUploadedName = 'avatars/' . $filename . '_' . time() . '.' . $extension;
+        $expectedSmallThumbName = 'avatars/thumbnail/' . $filename . '_small_' . time() . '.' . $extension;
+        $expectedMedThumbName = 'avatars/thumbnail/' . $filename . '_medium_' . time() . '.' . $extension;
+        $expectedLgThumbName = 'avatars/thumbnail/' . $filename . '_large_' . time() . '.' . $extension;
+
+        Storage::disk('public')->assertExists($expectedUploadedName);
+        Storage::disk('public')->assertExists($expectedSmallThumbName);
+        Storage::disk('public')->assertExists($expectedMedThumbName);
+        Storage::disk('public')->assertExists($expectedLgThumbName);
     }
 
     /**
@@ -91,6 +138,7 @@ class DeveloperControllerTest extends TestCase
         $developer = factory(Developer::class)->create();
         $newName = 'New Tester';
         $newEmail = 'newtest@test.com';
+        $avatar = UploadedFile::fake()->image('noimage.jpeg');
 
         $response = $this
             ->withHeaders([
@@ -99,16 +147,18 @@ class DeveloperControllerTest extends TestCase
                 'POST',
                 '/api/developer/update',
                 [
+                    'id' => $developer->id,
                     'name' => $newName,
+                    'avatar' => $avatar,
                     'email' => $newEmail,
-                    'id' => $developer->id
                 ]
             );
 
         $updatedDevloper = collect(Developer::find($developer->id));
+        // \Log::info('in controller test');
+        // \Log::info($updatedDevloper);
         $this->assertEquals($newName, $updatedDevloper['name']);
         $this->assertEquals($newEmail, $updatedDevloper['email']);   
-
         $response->assertStatus(302);
     }
 
@@ -133,8 +183,8 @@ class DeveloperControllerTest extends TestCase
             );
 
         $deletedDeveloper = (Developer::find($developer->id));
-        $this->assertEquals(null, $deletedDeveloper);
 
+        $this->assertEquals(null, $deletedDeveloper);
         $response->assertStatus(302);
     }
 
@@ -148,7 +198,6 @@ class DeveloperControllerTest extends TestCase
         $developer = factory(Developer::class)->create();
         $team = factory(Team::class)->create();
         $user = factory(User::class)->make(['user_role_id' => 1]);
-
 
         $response = $this
             ->actingAs($user)
@@ -166,13 +215,12 @@ class DeveloperControllerTest extends TestCase
                 ]
             );
 
-        $updatedCount = \DB::table('developers_teams')
-            ->where([
+        $updatedCount = \DB::table('developers_teams')->where([
                 ['developer_id', '=', $developer->id],
                 ['team_id', '=', $team->id],
-            ])->count();
-        $this->assertEquals(1, $updatedCount);
+        ])->count();
 
+        $this->assertEquals(1, $updatedCount);
         $response->assertStatus(302);
     }
 
@@ -206,12 +254,11 @@ class DeveloperControllerTest extends TestCase
                 ]
             );
 
-        $response->assertStatus(302);
+        $updatedCount = \DB::table('developers_teams')->where([
+            ['developer_id', '=', $developer->id],
+        ])->count();
 
-        $updatedCount = \DB::table('developers_teams')
-            ->where([
-                ['developer_id', '=', $developer->id],
-            ])->count();
         $this->assertEquals(count($team_ids), $updatedCount);
+        $response->assertStatus(302);
     }
 }

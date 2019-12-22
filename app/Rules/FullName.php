@@ -18,7 +18,7 @@ class FullName implements Rule
     {
         $pattern = '/\s/';
         $hasSpace = preg_match($pattern, $value);
-        
+
         $exploded = explode(' ', $value);
         $testName = '';
         foreach ($exploded as $explode) {
