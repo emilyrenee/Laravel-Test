@@ -30,18 +30,16 @@
 
         <div style="margin: 2rem 0">
             @foreach ($projects as $project)
-            <div
-                style="margin: 4rem 0; display: flex; flex-direction: column; align-items: flex-start"
-            >
+            <div style="margin: 4rem 0; display: flex; flex-direction: column; align-items: flex-start">
                 <h2 style="margin: 0 0 .25rem 0">{{ $project->name }}</h2>
                 @if($project->team)
-                    <p style="margin: .25rem 0 0 0"><b>Team</b></p>
-                    <p style="margin: 0 0 .15rem 0">{{ $project->team->name }}</p>
+                <p style="margin: .25rem 0 0 0"><b>Team</b></p>
+                <p style="margin: 0 0 .15rem 0">{{ $project->team->name }}</p>
                 @endif
                 @if(!$project->team)
-                    <a href="/project/assignTeam?id={{$project->id}}" style="align-self: flex-end">Assign to a Team</a>
+                <a href="/project/assignTeam?id={{$project->id}}" style="align-self: flex-end">Assign to a Team</a>
                 @endif
-                <hr style="width: 100%;"/>
+                <hr style="width: 100%;" />
             </div>
             @endforeach
         </div>

@@ -40,6 +40,7 @@ class DeveloperRepository
         if ($developer_team === 0) {
             $developer->teams()->attach($attributes['team_id']);
         }
+        
         return $developer;
     }
 }

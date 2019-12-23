@@ -34,7 +34,7 @@ class DeveloperController extends Controller
         $validatedData = array_merge($validatedData, ['avatar' => $fileNameToStore]);
 
         $developer = $this->developerRepo->create($validatedData);
-
+         
         if ($request->get('team_ids')) {
             foreach ($request->get('team_ids') as $team_id) {
                 $this->developerRepo->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);

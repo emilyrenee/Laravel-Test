@@ -49,14 +49,17 @@
                         <input type="text" name="personal_site" id="personal_site">
                     </div>
                     <div class="form-input">
-                        <select name="team_ids" multiple>
+                        <select name="team_ids[]" multiple>
                             @foreach ($teamOptions as $option)
-                            <option value="{{ $option->id }}" id="team_ids_{{$loop->iteration}}">{{ $option->name }}</option>
+                            <option value="{{ $option->id }}" id="team_ids_{{$loop->iteration}}">
+                                {{ $option->name }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
                     <br />
                     <input type="submit" style="width: 200px">
+
                     @if (isset($errors) && $errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -66,6 +69,7 @@
                         </ul>
                     </div>
                     @endif
+
                 </div>
             </form>
         </div>

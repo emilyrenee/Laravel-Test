@@ -30,24 +30,22 @@
 
         <div style="margin: 2rem 0">
             @foreach ($teams as $team)
-            <div
-                style="margin: 4rem 0; display: flex; flex-direction: column; align-items: flex-start"
-            >
+            <div style="margin: 4rem 0; display: flex; flex-direction: column; align-items: flex-start">
                 <h2 style="margin: 0 0 .25rem 0">{{ $team->name }}</h2>
                 @if(count($team->developers) > 0)
-                    <p style="margin: .25rem 0 0 0"><b>Developers</b></p>
-                    @foreach ($team->developers as $developer)
-                        <p style="margin: 0">{{ $developer->name }}</p>
-                    @endforeach
+                <p style="margin: .25rem 0 0 0"><b>Developers</b></p>
+                @foreach ($team->developers as $developer)
+                <p style="margin: 0">{{ $developer->name }}</p>
+                @endforeach
                 @endif
                 @if(count($team->projects) > 0)
-                    <p style="margin: .25rem 0 0 0"><b>Projects</b></p>
-                    @foreach ($team->projects as $project)
-                        <p style="margin: 0">{{ $project->name }}</p>
-                    @endforeach
+                <p style="margin: .25rem 0 0 0"><b>Projects</b></p>
+                @foreach ($team->projects as $project)
+                <p style="margin: 0">{{ $project->name }}</p>
+                @endforeach
                 @endif
                 <a href="/team/assignProject?id={{$team->id}}" style="align-self: flex-end">Assign Project</a>
-                <hr style="width: 100%;"/>
+                <hr style="width: 100%;" />
             </div>
             @endforeach
         </div>

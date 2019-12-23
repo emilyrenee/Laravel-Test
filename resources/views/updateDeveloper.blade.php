@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-input">
                         <label for="team_ids">Select one or more team(s)</label>
-                        <select name="team_ids" multiple>
+                        <select name="team_ids[]" multiple>
                             @foreach ($teamOptions as $option)
                             @if($developer->teams->filter(function ($team, $key) use ($option) {
                             return $team['name'] === $option->name;

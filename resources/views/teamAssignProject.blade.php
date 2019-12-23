@@ -38,16 +38,16 @@
                         <label for="project_id">Select one or more project(s)</label>
                         <select name="project_id" multiple>
                             @foreach ($projects as $project)
-                                @if(!$project->team_id)
-                                    <option value="{{ $project->id }}" id="project_id_{{$loop->iteration}}">
-                                        {{ $project->name }}
-                                    </option>
-                                @endif
-                                @if($project->team_id === $team->id )
-                                    <option value="{{ $project->id }}" id="project_id_{{$loop->iteration}}" selected>
-                                        {{ $project->name }}
-                                    </option>
-                                @endif
+                            @if(!$project->team_id)
+                            <option value="{{ $project->id }}" id="project_id_{{$loop->iteration}}">
+                                {{ $project->name }}
+                            </option>
+                            @endif
+                            @if($project->team_id === $team->id )
+                            <option value="{{ $project->id }}" id="project_id_{{$loop->iteration}}" selected>
+                                {{ $project->name }}
+                            </option>
+                            @endif
                             @endforeach
                         </select>
                     </div>

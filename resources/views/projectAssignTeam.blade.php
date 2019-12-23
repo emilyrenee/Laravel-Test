@@ -29,8 +29,13 @@
         </div>
 
         <div style="margin: 2rem 0;">
-            <h2 style="margin: 0 0 .25rem 0">{{ $project->name }}</h2>
-            <form method="post" action="/project/assignTeam">
+            <h2 style="margin: 0 0 .25rem 0">
+                {{ $project->name }}
+            </h2>
+            <form
+                method="post"
+                action="/project/assignTeam"
+            >
                 @csrf
                 <div class="form-inner">
                     <input type="hidden" name="id" id="id" value="{{$project->id}}">
@@ -38,21 +43,21 @@
                         <label for="team_id">Select one team</label>
                         <select name="team_id" multiple>
                             @foreach ($teams as $team)
-                            <option value="{{ $team->id }}" id="team_ids_{{$loop->iteration}}">
-                                {{ $team->name }}
-                            </option>
+                                <option value="{{ $team->id }}" id="team_ids_{{$loop->iteration}}">
+                                    {{ $team->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
                     <input type="submit" style="width: 200px">
                     @if (isset($errors) && $errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
                 </div>
             </form>

@@ -30,12 +30,10 @@
 
         <div style="margin: 4rem 0">
             @foreach ($tasks as $task)
-            <div
-                style="margin: 1rem 0; display: flex; flex-direction: column; align-items: flex-start"
-            >
+            <div style="margin: 1rem 0; display: flex; flex-direction: column; align-items: flex-start">
                 <h2 style="margin: 0 0 .5rem 0">{{ $task->name }}</h2>
                 <p style="margin: 0 0 .5rem 0">{{ $task->description }}</p>
-                <hr style="width: 100%;"/>
+                <hr style="width: 100%;" />
             </div>
             @endforeach
         </div>

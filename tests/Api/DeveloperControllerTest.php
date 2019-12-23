@@ -155,8 +155,7 @@ class DeveloperControllerTest extends TestCase
             );
 
         $updatedDevloper = collect(Developer::find($developer->id));
-        // \Log::info('in controller test');
-        // \Log::info($updatedDevloper);
+
         $this->assertEquals($newName, $updatedDevloper['name']);
         $this->assertEquals($newEmail, $updatedDevloper['email']);   
         $response->assertStatus(302);
