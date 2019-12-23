@@ -33,7 +33,7 @@ class ProjectControllerTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/api/project/assignTask',
+            '/api/project/task',
             [
                 'id' => $project->id,
                 'task_id' => $task->id
@@ -60,7 +60,7 @@ class ProjectControllerTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            '/api/project/assignTeam',
+            '/api/project/team',
             [
                 'id' => $project->id,
                 'team_id' => $team->id

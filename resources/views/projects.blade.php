@@ -46,7 +46,7 @@
                 <p style="margin: 0 0 .15rem 0">{{ $project->team->name }}</p>
                 @endif
                 @if(!$project->team)
-                <a href="/project/assignTeam?id={{$project->id}}" style="align-self: flex-end">Assign to a Team</a>
+                <a href="/project/team?id={{$project->id}}" style="align-self: flex-end">Assign to a Team</a>
                 @endif
                 <hr style="width: 100%;" />
             </div>

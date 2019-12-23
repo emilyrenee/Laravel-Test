@@ -79,13 +79,13 @@ class Developer extends Model
         return $developer;
     }
 
-    public function assignTeam(array $attributes = [], array $options = [])
+    public function team(array $attributes = [], array $options = [])
     {
         $user = Auth::user();
         $developer = new Developer();
 
         if ($user->can('assignTeam', $developer)) {
-            $this->developer->assignTeam(
+            $this->developer->team(
                 [
                     'id' => $attributes['id'],
                     'team_id' => $attributes['team_id']

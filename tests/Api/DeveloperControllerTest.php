@@ -207,7 +207,7 @@ class DeveloperControllerTest extends TestCase
             )
             ->json(
                 'POST',
-                '/api/developer/assignTeam',
+                '/api/developer/team',
                 [
                     'id' => $developer->id,
                     'team_ids' => [$team->id]
@@ -246,7 +246,7 @@ class DeveloperControllerTest extends TestCase
                 ]
             )->json(
                 'POST',
-                '/api/developer/assignTeam',
+                '/api/developer/team',
                 [
                     'id' => $developer->id,
                     'team_ids' => $team_ids

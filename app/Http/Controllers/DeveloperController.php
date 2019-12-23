@@ -36,7 +36,7 @@ class DeveloperController extends Controller
          
         if ($request->get('team_ids')) {
             foreach ($request->get('team_ids') as $team_id) {
-                $this->developerRepo->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
+                $this->developerRepo->team(['id' => $developer->id, 'team_id' => $team_id]);
             }
         }
 
@@ -60,7 +60,7 @@ class DeveloperController extends Controller
 
         if ($request->get('team_ids')) {
             foreach ($request->get('team_ids') as $team_id) {
-                $this->developerRepo->assignTeam(['id' => $developer->id, 'team_id' => $team_id]);
+                $this->developerRepo->team(['id' => $developer->id, 'team_id' => $team_id]);
             }
         }
 
@@ -78,7 +78,7 @@ class DeveloperController extends Controller
         return redirect('/developers');
     }
 
-    public function assignTeam(Request $request)
+    public function team(Request $request)
     {
         $request->validate([
             'id' => 'required|numeric',
@@ -90,7 +90,7 @@ class DeveloperController extends Controller
 
         foreach ($team_ids as $team_id) {
             $this->authorize('assignTeam');
-            $this->developerRepo->assignTeam([
+            $this->developerRepo->team([
                 'id' => $id,
                 'team_id' => $team_id
             ]);

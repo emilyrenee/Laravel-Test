@@ -32,7 +32,7 @@ class DeveloperRepository
         return $developer->delete($attributes['id']);
     }
 
-    public function assignTeam(array $attributes = [])
+    public function team(array $attributes = [])
     {
         $developer = Developer::find($attributes['id']);
         $developer_team = $developer->teams()->where('team_id', $attributes['team_id'])->count();

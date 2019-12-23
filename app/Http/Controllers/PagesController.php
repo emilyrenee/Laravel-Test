@@ -51,11 +51,11 @@ class PagesController extends Controller
         return view('teams')->with('teams', $teams);
     }
 
-    public function teamAssignProject(Request $request)
+    public function teamProject(Request $request)
     {
         $team = Team::find($request->query('id'));
         $projects = Project::all();
-        return view('teamAssignProject')->with('team', $team)->with('projects', $projects);
+        return view('teamProject')->with('team', $team)->with('projects', $projects);
     }
 
     public function projects()
@@ -64,11 +64,11 @@ class PagesController extends Controller
         return view('projects')->with('projects', $projects);
     }
 
-    public function projectAssignTeam(Request $request)
+    public function projectTeam(Request $request)
     {
         $project = Project::find($request->query('id'));
         $teams = Team::all();
-        return view('projectAssignTeam')->with('project', $project)->with('teams', $teams);
+        return view('projectTeam')->with('project', $project)->with('teams', $teams);
     }
 
     public function projectStatus(Request $request)

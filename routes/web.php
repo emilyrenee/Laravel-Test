@@ -23,9 +23,9 @@ Route::get('/developers', 'PagesController@developers');
 Route::get('/developer/create', 'PagesController@developerCreate');
 Route::get('/developer/update', 'PagesController@developerUpdate');
 Route::get('/teams', 'PagesController@teams');
-Route::get('/team/assignProject', 'PagesController@teamAssignProject');
+Route::get('/team/project', 'PagesController@teamProject');
 Route::get('/projects', 'PagesController@projects');
-Route::get('/project/assignTeam', 'PagesController@projectAssignTeam');
+Route::get('/project/team', 'PagesController@projectTeam');
 Route::get('/project/status', 'PagesController@projectStatus');
 Route::get('/tasks', 'PagesController@tasks');
 
@@ -35,18 +35,20 @@ Route::prefix('api')->group(function () {
     Route::post('/developer/create', 'DeveloperController@create');
     Route::post('/developer/update', 'DeveloperController@update');
     Route::post('/developer/delete', 'DeveloperController@delete');
-    Route::post('/developer/assignTeam', 'DeveloperController@assignTeam');
+    Route::post('/developer/team', 'DeveloperController@team');
 
     // project
     Route::post('/project/create', 'ProjectController@create');
     Route::post('/project/update', 'ProjectController@update');
     Route::post('/project/delete', 'ProjectController@delete');
     Route::post('/project/status', 'ProjectController@status');
-    Route::post('/project/assignTeam', 'ProjectController@team');
-    Route::post('/project/assignTask', 'ProjectController@task');
+    Route::post('/project/team', 'ProjectController@team');
+    
+    // TODO: get rid of tasks?
+    Route::post('/project/task', 'ProjectController@task');
 
     // misc
-    Route::post('/team/assignProject', function (Request $request) {
+    Route::post('/team/project', function (Request $request) {
         $request->validate([
             'id' => 'required|numeric',
             'project_id' => 'required|numeric',
@@ -56,6 +58,8 @@ Route::prefix('api')->group(function () {
         $project->save();
         return redirect('/teams');
     });
+
+    // TODO: get rid of tasks?
     Route::post('/task/assignProject', function (Request $request) {
         $request->validate([
             'id' => 'required|numeric',

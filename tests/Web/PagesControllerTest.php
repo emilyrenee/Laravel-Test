@@ -92,7 +92,7 @@ class PagesControllerTest extends TestCase
     public function testProjectsAssignTeam()
     {
         $project = factory(Project::class)->create();
-        $response = $this->get('/project/assignTeam?id=' . $project->id);
+        $response = $this->get('/project/team?id=' . $project->id);
         $response->assertStatus(200);
     }
 

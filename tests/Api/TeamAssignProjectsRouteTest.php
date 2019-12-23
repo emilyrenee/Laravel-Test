@@ -31,7 +31,7 @@ class TeamAssignProjectsTest extends TestCase
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            'api/team/assignProject',
+            'api/team/project',
             ['id' => $team->id, 'project_id' => $project->id]
         );
 
