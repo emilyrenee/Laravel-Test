@@ -34,7 +34,7 @@
             </h2>
             <form
                 method="post"
-                action="/project/assignTeam"
+                action="/api/project/assignTeam"
             >
                 @csrf
                 <div class="form-inner">

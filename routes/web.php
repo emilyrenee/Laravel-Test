@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 
 Auth::routes();
 
+// web
 Route::get('/', 'PagesController@index');
 Route::get('/developers', 'PagesController@developers');
 Route::get('/developer/create', 'PagesController@developerCreate');
@@ -27,6 +28,7 @@ Route::get('/projects', 'PagesController@projects');
 Route::get('/project/assignTeam', 'PagesController@projectAssignTeam');
 Route::get('/tasks', 'PagesController@tasks');
 
+// api
 Route::prefix('api')->group(function () {
     // developer
     Route::post('/developer/create', 'DeveloperController@create');

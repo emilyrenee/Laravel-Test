@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
-{
+{   
     public function team(Request $request)
     {
         $request->validate([

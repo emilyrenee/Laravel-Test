@@ -7,6 +7,8 @@ use App\Project;
 
 class Team extends Model
 {
+    protected $guarded = ['id'];
+    
     /**
      * Get all of the developers that are assigned this team.
      */

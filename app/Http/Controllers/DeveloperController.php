@@ -12,7 +12,6 @@ use App\Repositories\DeveloperRepository;
 class DeveloperController extends Controller
 {
     private $developerRepo;
-    protected $fillable = ['name', 'email', 'avatar', 'personal_site', 'is_local', 'timezone'];
 
     public function __construct(DeveloperRepository $developerRepository)
     {

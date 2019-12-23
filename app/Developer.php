@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class Developer extends Model
 {
     use ShareString;
+
+    protected $guarded = ['id'];
+    
     /**
      * The "booting" method of the model.
      *

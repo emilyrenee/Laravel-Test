@@ -38,7 +38,7 @@ class DeveloperTest extends TestCase
      */
     public function share_string_should_return_correct_string()
     {
-        $result = $this->developer->share("");
+        $result = $this->developer->share();
         $this->assertEquals($result, "Share this string!");
     }
 }

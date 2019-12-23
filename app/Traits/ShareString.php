@@ -5,7 +5,7 @@ namespace App\Traits;
 trait ShareString
 {
 
-    public function share($item)
+    public function share()
     {
         return 'Share this string!';
     }

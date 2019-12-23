@@ -26,7 +26,7 @@ class ProjectTest extends TestCase
      */
     public function share_string_should_return_correct_string()
     {
-        $result = $this->project->share("");
+        $result = $this->project->share();
         $this->assertEquals($result, "Share this string!");
     }
 }

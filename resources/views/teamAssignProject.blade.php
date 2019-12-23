@@ -30,7 +30,7 @@
 
         <div style="margin: 2rem 0;">
             <h2 style="margin: 0 0 .25rem 0">{{ $team->name }}</h2>
-            <form method="post" action="/team/assignProject">
+            <form method="post" action="/api/team/assignProject">
                 @csrf
                 <div class="form-inner">
                     <input type="hidden" name="id" id="id" value="{{$team->id}}">
