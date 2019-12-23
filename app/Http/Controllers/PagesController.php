@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Developer;
+use App\Task;
 use App\Team;
 use App\Project;
-use App\Task;
+use App\Developer;
+use App\ProjectStatus;
+use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
@@ -68,6 +69,13 @@ class PagesController extends Controller
         $project = Project::find($request->query('id'));
         $teams = Team::all();
         return view('projectAssignTeam')->with('project', $project)->with('teams', $teams);
+    }
+
+    public function projectStatus(Request $request)
+    {
+        $project = Project::find($request->query('id'));
+        $project_statuses = ProjectStatus::all();
+        return view('projectStatus')->with('project', $project)->with('project_statuses', $project_statuses);
     }
 
     public function tasks()

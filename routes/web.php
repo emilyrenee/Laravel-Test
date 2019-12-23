@@ -26,6 +26,7 @@ Route::get('/teams', 'PagesController@teams');
 Route::get('/team/assignProject', 'PagesController@teamAssignProject');
 Route::get('/projects', 'PagesController@projects');
 Route::get('/project/assignTeam', 'PagesController@projectAssignTeam');
+Route::get('/project/status', 'PagesController@projectStatus');
 Route::get('/tasks', 'PagesController@tasks');
 
 // api
@@ -40,6 +41,7 @@ Route::prefix('api')->group(function () {
     Route::post('/project/create', 'ProjectController@create');
     Route::post('/project/update', 'ProjectController@update');
     Route::post('/project/delete', 'ProjectController@delete');
+    Route::post('/project/status', 'ProjectController@status');
     Route::post('/project/assignTeam', 'ProjectController@team');
     Route::post('/project/assignTask', 'ProjectController@task');
 

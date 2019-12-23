@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use ShareString;
+
+    protected $guarded = ['id'];
+    
     /**
-     * Get all of the tasks for the project.
+     * Get the status for the project.
      */
-    public function tasks()
+    public function status()
     {
-        return $this->hasMany('App\Task');
+        return $this->hasOne('App\ProjectStatus', 'id', 'project_status_id');
     }
 
     /**

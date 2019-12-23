@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use App\Project;
-use Illuminate\Support\Facades\Log;
+use App\ProjectStatus;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -35,6 +35,21 @@ class ProjectController extends Controller
         $task->project_id = $request->get('id');
 
         $task->save();
+
+        return redirect('/projects');
+    }
+
+    public function status(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|numeric',
+            'project_status_id' => 'required|numeric',
+        ]);
+
+        $project = Project::find($request->get('id'));
+        $project->project_status_id = $request->get('project_status_id');
+
+        $project->save();
 
         return redirect('/projects');
     }
