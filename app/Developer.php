@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\Traits\ShareString;
 use App\Scopes\IsLocalScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Developer extends Model
 {
+    use ShareString;
     /**
      * The "booting" method of the model.
      *

@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\ShareString;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use ShareString;
     /**
      * Get all of the tasks for the project.
      */
