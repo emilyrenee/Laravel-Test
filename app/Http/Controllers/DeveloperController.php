@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Image;
+use App\Events\Event;
 use App\Rules\FullName;
 use Illuminate\Http\Request;
 use App\Jobs\ProcessEmailJob;
@@ -41,6 +42,7 @@ class DeveloperController extends Controller
         }
 
         dispatch(new ProcessEmailJob($developer->id))->onQueue('high');
+        event(new Event());
 
         return redirect('/developers');
     }

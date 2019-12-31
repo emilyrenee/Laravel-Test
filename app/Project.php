@@ -27,11 +27,4 @@ class Project extends Model
         return $this->belongsTo('App\Team');
     }
 
-    /**
-     * Get all of the developers for the project.
-     */
-    public function developers()
-    {
-        return $this->belongsToMany('App\Developer');
-    }
 }

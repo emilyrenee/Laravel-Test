@@ -5,6 +5,7 @@ namespace Tests\Api;
 use App\Team;
 use App\User;
 use App\Developer;
+use App\Events\Event;
 use Tests\TestCase;
 use App\Jobs\ProcessEmailJob;
 use Illuminate\Http\UploadedFile;
@@ -30,6 +31,7 @@ class DeveloperControllerTest extends TestCase
     public function create_should_dispatch_job_insert_and_redirect()
     {
         $this->expectsJobs([ProcessEmailJob::class]);
+        $this->expectsEvents([Event::class]);
         $developer = factory(Developer::class)->create();
         $newName = $developer->name;
         $newEmail = $developer->email;
