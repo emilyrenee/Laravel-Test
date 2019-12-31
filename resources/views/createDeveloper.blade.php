@@ -75,8 +75,6 @@
         </div>
         <div class="links">
             <a href="/projects">Projects</a>
-            <a href="/tasks">Tasks</a>
-            |
             <a href="/teams">Teams</a>
             <a href="/developers">Developers</a>
         </div>

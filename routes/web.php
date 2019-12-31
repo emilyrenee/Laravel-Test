@@ -11,7 +11,6 @@
 |
 */
 
-use App\Task;
 use App\Project;
 use Illuminate\Http\Request;
 
@@ -27,7 +26,6 @@ Route::get('/team/project', 'PagesController@teamProject');
 Route::get('/projects', 'PagesController@projects');
 Route::get('/project/team', 'PagesController@projectTeam');
 Route::get('/project/status', 'PagesController@projectStatus');
-Route::get('/tasks', 'PagesController@tasks');
 
 // api
 Route::prefix('api')->group(function () {
@@ -43,9 +41,6 @@ Route::prefix('api')->group(function () {
     Route::post('/project/delete', 'ProjectController@delete');
     Route::post('/project/status', 'ProjectController@status');
     Route::post('/project/team', 'ProjectController@team');
-    
-    // TODO: get rid of tasks?
-    Route::post('/project/task', 'ProjectController@task');
 
     // misc
     Route::post('/team/project', function (Request $request) {
@@ -57,17 +52,5 @@ Route::prefix('api')->group(function () {
         $project->team_id = $request->get('id');
         $project->save();
         return redirect('/teams');
-    });
-
-    // TODO: get rid of tasks?
-    Route::post('/task/assignProject', function (Request $request) {
-        $request->validate([
-            'id' => 'required|numeric',
-            'project_id' => 'required|numeric',
-        ]);
-        $task = Task::find($request->get('id'));
-        $task->project_id = $request->get('project_id');
-        $task->save();
-        return redirect('/tasks');
     });
 });

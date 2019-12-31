@@ -2,7 +2,6 @@
 
 namespace Tests\Api;
 
-use App\Task;
 use App\Team;
 use App\Project;
 use Tests\TestCase;
@@ -17,33 +16,6 @@ class ProjectControllerTest extends TestCase
     {
         parent::setUp();
         $this->withoutMiddleware();
-    }
-
-    /**
-     * Team assign project route returns 302 status.
-     * @test
-     * @return void
-     */
-    public function assign_task_relates_task_to_project_and_redirects()
-    {
-        $project = factory(Project::class)->create();
-        $task = factory(Task::class)->create();
-
-        $response = $this->withHeaders([
-            'X-Header' => 'Value',
-        ])->json(
-            'POST',
-            '/api/project/task',
-            [
-                'id' => $project->id,
-                'task_id' => $task->id
-            ]
-        );
-
-        $updatedTask = collect(Task::find($task->id));
-
-        $this->assertEquals($project->id, $updatedTask['project_id']);
-        $response->assertStatus(302);
     }
 
     /**

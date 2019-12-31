@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Task;
 use App\Team;
 use App\Project;
 use App\Developer;
@@ -76,11 +75,5 @@ class PagesController extends Controller
         $project = Project::find($request->query('id'));
         $project_statuses = ProjectStatus::all();
         return view('projectStatus')->with('project', $project)->with('project_statuses', $project_statuses);
-    }
-
-    public function tasks()
-    {
-        $tasks = Task::orderBy('updated_at', 'desc')->paginate(10);
-        return view('tasks')->with('tasks', $tasks);
     }
 }

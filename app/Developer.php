@@ -26,14 +26,6 @@ class Developer extends Model
     }
 
     /**
-     * Get all of the tasks for the developer.
-     */
-    public function tasks()
-    {
-        return $this->hasMany('App\Task');
-    }
-
-    /**
      * Get all of the teams for the developer.
      */
     public function teams()

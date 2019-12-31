@@ -95,15 +95,4 @@ class PagesControllerTest extends TestCase
         $response = $this->get('/project/team?id=' . $project->id);
         $response->assertStatus(200);
     }
-
-    /**
-     * Get teams route returns 200 status.
-     *
-     * @return void
-     */
-    public function testTasksIndex()
-    {
-        $response = $this->get('/tasks');
-        $response->assertStatus(200);
-    }
 }
